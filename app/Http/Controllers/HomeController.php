@@ -7,7 +7,7 @@ use App\Boundary;
 use App\User;
 
 
-class HomeController extends Controllers
+class HomeController extends Controller
 {
 
     public $user_count = 0;
