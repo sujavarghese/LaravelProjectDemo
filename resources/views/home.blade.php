@@ -1,5 +1,3 @@
-{{--@extends('layouts.app')--}}
-
 @extends('_template')
 
 @section('content')
@@ -12,7 +10,7 @@
 <section class="content-header">
     <h1>
         {{ $page_title or 'Boundary & Design Exchange Dashboard'}}
-        <small>{{ $page_description or 'Overall summary of Boundary & Design Exchange m' }}</small>
+        <small>{{ $page_description or 'Overall summary of Boundary & Design Exchange' }}</small>
     </h1>
     <!-- You can dynamically generate breadcrumbs here -->
 </section>
