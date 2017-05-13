@@ -15,39 +15,17 @@
                     View Boundaries
                 </a>
             </li>
-        </ul>
-
-    </li>
-    <li>
-        <a href="#"><span>HFC</span><i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu" role="menu">
-            <li>
-                <a href="/mapinfo_validator">
-                    MapInfo Validator
-                </a>
-            </li>
             <li>
                 <a href="/kml_export">
-                    Export KML
+                    Export Boundary to KML
                 </a>
             </li>
         </ul>
 
     </li>
     <li>
-        <a href="#"><span>MTM</span><i class="fa fa-angle-left pull-right"></i></a>
-        <ul class="treeview-menu" role="menu">
-            <li>
-                <a href="/mapinfo_validator">
-                    MapInfo Validator
-                </a>
-            </li>
-            <li>
-                <a href="/unknown">
-                    New Menu
-                </a>
-            </li>
-        </ul>
+        <a href="/unknown"><span>Map</span></a>
+    </li>
     <li class="active"><a href="{{ route('home') }}"><span>Admin</span></a></li>
     <li class="active">
         <a href="{{ route('logout') }}"
