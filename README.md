@@ -1,16 +1,20 @@
-
 ##Boundary Design Exchange
+
+
 This is a sample application for Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. 
 
 
-###What's done,
+##What's done,
+
+
 * User Authentication
 * Boundary Loader 
     - CSV upload, validate and load into MySQL Database
     - Boundary details tab view
 
 
-###In Scope
+## In Scope
+
 
 Incorporate ReactJS, Maps, KML into the application.
 
@@ -28,7 +32,8 @@ The final application is expected to have a number of features.
     - Search boundary by name and export
 
 
-###Installation Steps
+## Installation Steps
+
 
 1.Open cmd prompt and move to your destination folder
 
@@ -61,7 +66,8 @@ The final application is expected to have a number of features.
     2.9 Click on register link and create an User
     
     
-###Changelog
+## Changelog
+
 
 0.4 UI enhancements
 
