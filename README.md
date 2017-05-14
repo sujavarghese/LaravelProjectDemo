@@ -10,6 +10,8 @@ This is a sample application for Boundary Design Exchange built on Laravel PHP, 
 
 
 * User Authentication
+* Dashboard
+    - Display User details and activities 
 * Boundary Loader 
     - CSV upload, validate and load into MySQL Database
     - Boundary details tab view
