@@ -1,12 +1,12 @@
 
 
-##Boundary Design Exchange
+## Boundary Design Exchange
 
 
 This is a sample application for Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. 
 
 
-##What's done,
+## What's done,
 
 
 * User Authentication
