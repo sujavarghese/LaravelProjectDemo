@@ -1,8 +1,11 @@
 
 ##Boundary Design Exchange
+
+
 This is a sample application for Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. Tool accepts a CSV file as input and validates it. Once input file pass validation, it gets stored into the MySQL database. One can view the uploaded data and associated details. 
 
 ###In Scope
+
 
 Incorporate ReactJS, Maps, KML into the application.
 
@@ -21,6 +24,8 @@ The final application is expected to have a number of features.
 
 
 ###Installation Steps
+
+
 1.Open cmd prompt and move to your destination folder
 
     run git clone https://github.com/sujavarghese/LaravelProjectDemo.git
@@ -53,6 +58,7 @@ The final application is expected to have a number of features.
     
     
 ###Changelog
+
 
 0.4 UI enhancements
 
