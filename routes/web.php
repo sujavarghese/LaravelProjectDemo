@@ -42,11 +42,14 @@ Route::get('/new_menu', function(){
     return view('newHome');
 });
 
-Route::get('/test', function(){
-    return view('testpage');
+Route::get('/kml_export', function(){
+    return view('boundaries.comingSoon');
+});
+
+Route::get('/map', function(){
+    return view('boundaries.comingSoon');
 });
 
 Route::get('/admin', function(){
     return view('admin_template');
 });
-

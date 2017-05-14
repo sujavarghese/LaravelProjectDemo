@@ -24,7 +24,7 @@
 
     </li>
     <li>
-        <a href="/unknown"><span>Map</span></a>
+        <a href="/map"><span>Map</span></a>
     </li>
     <li class="active"><a href="{{ route('home') }}"><span>Admin</span></a></li>
     <li class="active">
