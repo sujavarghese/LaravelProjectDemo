@@ -50,3 +50,11 @@ Route::get('/admin', function(){
     return view('admin_template');
 });
 
+Route::resource('converter', 'FileConverter');
+
+Route::get('/converter', function(){
+    return view('converter.fileConverter');
+});
+
+Route::post('file_converter/upload', 'FileConverter@load_file');
+

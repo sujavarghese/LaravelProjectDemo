@@ -48,6 +48,17 @@
                 </a>
             </li>
         </ul>
+    </li>
+    <li>
+        <a href="#"><span>Utilities</span><i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" role="menu">
+            <li>
+                <a href="/converter">
+                    File Converter
+                </a>
+            </li>
+        </ul>
+    </li>
     <li class="active"><a href="{{ route('home') }}"><span>Admin</span></a></li>
     <li class="active">
         <a href="{{ route('logout') }}"
