@@ -30,6 +30,11 @@ Route::get('view_boundaries', 'BoundariesController@get_data');
 
 Route::resource('boundaries', 'BoundariesController');
 
+Route::get('boundary/export_mapinfo', 'BoundariesController@export_mapinfo');
+
+Route::get('boundary/export_kml', 'BoundariesController@export_kml');
+
+Route::get('boundary/convert_kml_to_mapinfo', 'BoundariesController@convert_kml_to_mapinfo');
 
 Route::post('boundary/upload', 'BoundariesController@validate_load_store');
 

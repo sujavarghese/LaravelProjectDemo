@@ -137,7 +137,53 @@ class BoundariesController extends Controller
         Session::put('boundary_msgs', $this->boundary_msgs);
         return Redirect::to('boundary_loader');
     }
-
+    public function export_mapinfo()
+    {
+        $data = array();
+        $r = array();
+        $t = 1;
+        $out_path = "C:\\xampp\\htdocs\\data\\out.tab";
+        $db_name = "laraveldemodb";
+        $user = 'root';
+        $host = 'localhost';
+        $port = '3306';
+        $table = 'boundaries';
+        exec(
+            'ogr2ogr -f "MapInfo File" ' . $out_path . ' "MYSQL:' . $db_name . ',user=' . $user . ',host=' . $host . ',port=' . $port . ',tables=' . $table . '"',
+            $r, $t
+        );
+        $data['result'] = $r;
+        $data['status'] = $t;
+        return $data;
+    }
+    public function export_kml()
+    {
+        $data = array();
+        $r = array();
+        $t = 1;
+        $out_path = "C:\\xampp\\htdocs\\data\\out.kml";
+        $db_name = "laraveldemodb";
+        $user = 'root';
+        $host = 'localhost';
+        $port = '3306';
+        $table = 'boundaries';
+        exec(
+            'ogr2ogr -f "KML" ' . $out_path . ' "MYSQL:' . $db_name . ',user=' . $user . ',host=' . $host . ',port=' . $port . ',tables=' . $table . '"',
+            $r, $t
+        );
+        $data['result'] = $r;
+        $data['status'] = $t;
+        return $data;
+    }
+    public function convert_kml_to_mapinfo()
+    {
+        $input_path = "C:\\xampp\\htdocs\\data\\out.kml";
+        $output_path = "C:\\xampp\\htdocs\\data\\convert.tab";
+        exec(
+            'ogr2ogr -f "MapInfo File" ' . $output_path . ' ' . $input_path,
+            $r, $t
+        );
+    }
     public function get_data()
     {
         $data = Boundary::all();
