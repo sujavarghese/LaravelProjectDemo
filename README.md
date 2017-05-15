@@ -17,7 +17,7 @@ This is an application for Network Boundary Design Exchange built on Laravel PHP
     - Boundary details tab view
 
 
-## In Scope
+## What's coming next
 
 
 Incorporate ReactJS, Maps, KML into the application.
@@ -69,7 +69,7 @@ The final application is expected to have a number of features.
     2.9 Click on register link and create an User
     
     
-You can find a sample upload file under `tests\TestData`
+You can find a sample input file under `tests\TestData`
 
 ## Changelog
 
