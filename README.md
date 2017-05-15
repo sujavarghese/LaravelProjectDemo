@@ -22,7 +22,6 @@ This is an application for Network Boundary Design Exchange built on Laravel PHP
 
 Incorporate ReactJS, Maps, KML into the application.
 
-The final application is expected to have a number of features. 
 * Dashboard
     - Display user activities with graphical representation
 * Boundary Loader tool
