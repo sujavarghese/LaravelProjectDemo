@@ -1,9 +1,9 @@
 
 
-## Boundary Design Exchange
+## Network Boundary Design Exchange
 
 
-This is a sample application for Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. 
+This is an application for Network Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. 
 
 
 ## What's done
@@ -11,7 +11,7 @@ This is a sample application for Boundary Design Exchange built on Laravel PHP, 
 
 * User Authentication
 * Dashboard
-    - Display User details and activities 
+    - Display User details and activities performed.
 * Boundary Loader 
     - CSV upload, validate and load into MySQL Database
     - Boundary details tab view
@@ -26,10 +26,9 @@ The final application is expected to have a number of features.
 * Dashboard
     - Display user activities with graphical representation
 * Boundary Loader tool
-    - Module to Upload, Validate and Load input file
-    - Support multiple file types such as KML, CSV
+    - Support KML file type
 * Boundary Exporter
-    - Support file type KML
+    - Support file types viz., KML, MapInfo
 * Map Viewer
     - View uploaded data in the map and export selected boundary
 * Search
@@ -70,6 +69,8 @@ The final application is expected to have a number of features.
     2.9 Click on register link and create an User
     
     
+You can find a sample upload file under `tests\TestData`
+
 ## Changelog
 
 
