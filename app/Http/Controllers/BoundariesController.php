@@ -33,6 +33,26 @@ class BoundariesController extends Controller
         }
         return true;
     }
+    public function get_sam_names()
+    {
+        $sam_names = $this->sam_names();
+        $response = array(
+            ''=> '',
+        );
+
+        for ($i = 0, $c = count($sam_names); $i < $c; $i += 1) {
+            $response[$sam_names[$i]] = $sam_names[$i];
+        }
+        return $response;
+    }
+    public function view_loader()
+    {
+        $response = array(
+            'sam_names' => $this->get_sam_names(),
+        );
+
+         return view('boundaries.boundaryLoader')->with('response', $response);
+    }
 
     public function validate_csv_data($bname, $btype)
     {
@@ -190,7 +210,7 @@ class BoundariesController extends Controller
     {
         return $this->defined_boundary_type;
     }
-    public function get_sam_names()
+    function sam_names()
     {
         $cn = new Constants();
         return $cn->getSAMNames();

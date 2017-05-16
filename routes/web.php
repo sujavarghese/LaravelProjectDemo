@@ -22,9 +22,7 @@ Route::get('/unknown', function () {
     return view('errorpage');
 });
 
-Route::get('/boundary_loader', function(){
-    return view('boundaries.boundaryLoader');
-});
+Route::get('/boundary_loader', 'BoundariesController@view_loader');
 
 Route::get('view_boundaries', 'BoundariesController@get_data');
 

@@ -43,7 +43,7 @@
                                     <div class="col-sm-2">
                                         {!! Form::select(
                                             'selBoundaryType',
-                                            array('' => '', 'SAM' => 'SAM', 'FSA' => 'FSA'),
+                                            array('' => '', 'SAM' => 'SAM'),
                                             null,
                                             [
                                                 'class' => 'form-control',
@@ -55,13 +55,7 @@
                                         {!!
                                             Form::select(
                                                 'selBoundaryName',
-                                                array(
-                                                    '' => '',
-                                                    '2ABN-01' => '2ABN-01',
-                                                    '3ACH-01' => '3ACH-01',
-                                                    '4MRA-63' => '4MRA-63',
-                                                    '5LIS-20' => '5LIS-20',
-                                                ),
+                                                $response['sam_names'],
                                                 null,
                                                 [
                                                     'class' => 'form-control',
