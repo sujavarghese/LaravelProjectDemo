@@ -1,0 +1,22 @@
+.select-boundary-wrapper, .goemetry-type-selection {
+    margin-bottom: 20px;
+}
+.align-label {
+    margin-top: 6px;
+    text-align: right;
+}
+.map {
+    height: auto;
+    width: 100%;
+}
+.width100 {
+    width: 100%;
+}
+.display-none {
+    display: none;
+}
+.boundary-loading-wrapper {
+    position: absolute;
+    top: 6px;
+    right: -5px;
+}

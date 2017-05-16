@@ -55,7 +55,7 @@ Route::get('/kml_export', function(){
 });
 
 Route::get('/map', function(){
-    return view('boundaries.comingSoon');
+    return view('map.mapViewer');
 });
 
 Route::get('/admin', function(){

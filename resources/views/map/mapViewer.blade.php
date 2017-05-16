@@ -1,0 +1,66 @@
+{{--@extends('layouts.app')--}}
+
+@extends('_template')
+
+@section('content')
+
+
+<div id="navbar" class="collapse navbar-collapse">
+
+</div>
+
+<section class="content-header">
+    <h1>
+        {{ $page_title or 'Map Viewer'}}
+    </h1>
+    <!-- You can dynamically generate breadcrumbs here -->
+</section>
+
+<section class="content">
+    <div class="container width100">
+        <div class="row select-boundary-wrapper">
+            <form action="" id="exportBoundary">
+                <label class="col-sm-3 align-label">Select Boundary:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="boundaryType" name="boundaryType" required>
+                        <option value="" selected="selected">Select Boundary Type</option>
+                        <option value="SAM">SAM</option>
+                        <option value="FSA">FSA</option>
+                    </select>
+                    <div class="boundary-loading-wrapper">
+                        <i class="fa fa-refresh fa-spin boundary-loading display-none"></i>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <select class="form-control" id="boundaryCode" name="boundaryCode" required disabled="disabled">
+                        <option value="" selected="selected">Select Boundary Code</option>
+                        <option value="SAM">SAM</option>
+                    </select>
+                </div>
+        </div>
+        <div class="row goemetry-type-selection display-none">
+            <label class="col-sm-3 align-label">Draw Boundary:</label>
+            <div class="col-sm-3">
+                <select class="form-control" id="geometryType">
+                    <option value="" selected="selected">Select Geometry type</option>
+                    <option value="Point">Point</option>
+                    <option value="LineString">LineString</option>
+                    <option value="Polygon">Polygon</option>
+                    <option value="Circle">Circle</option>
+                    <option value="None">None</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary ">Export</button>
+            </div>
+            </form>
+        </div>
+        <div class="row">
+            <div id="map" class="map"></div>
+        </div>
+    </div>
+</section>
+<link rel="stylesheet" href="https://openlayers.org/en/v4.1.1/css/ol.css" type="text/css">
+<script src="https://openlayers.org/en/v4.1.1/build/ol.js" type="text/javascript"></script>
+<script src="{{ asset("/js/map_viewer.js")}}" type="text/javascript"></script>
+@endsection
