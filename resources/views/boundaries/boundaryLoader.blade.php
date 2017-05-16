@@ -27,7 +27,7 @@
 
                         <!-- form-start -->
                         <div>
-                            <h6 class="box-title">This tools allows user to Boundary data loader in a specified CSV format</h6>
+                            <h6 class="box-title">This tools allows user to Boundary data loader in a specified CSV/KML format</h6>
                             {{--TODO: Provide details about CSV format--}}
                             {!! Form::open(
                                 array(
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile" class="col-sm-5 control-label">
-                                        Upload Boundary CSV file: </label>
+                                        Upload Boundary CSV/KML file: </label>
 
                                     <div class="col-sm-5">
 

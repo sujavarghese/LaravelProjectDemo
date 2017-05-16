@@ -20,6 +20,7 @@ class CreateBoundaryLayersTable extends Migration
             $table->string('boundary_name');
             $table->string('added_by');
             $table->timestamp('created_at');
+            $table->LONGTEXT('coordinates');
         });
     }
 

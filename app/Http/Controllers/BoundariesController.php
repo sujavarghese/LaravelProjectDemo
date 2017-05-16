@@ -14,6 +14,7 @@ use Validator;
 use Redirect;
 use Session;
 use Auth;
+use DateTime;
 
 class BoundariesController extends Controller
 {
@@ -31,8 +32,16 @@ class BoundariesController extends Controller
             $this->boundary_msgs['b_name'] = 'Boundary Name is Required';
             return false;
         }
+        $checkFileExt = $this->validate_file_extension($file);
+        if (!$checkFileExt){
+            $this->boundary_msgs['file_ext_error'] = 'Upload file must be KML/CSV';
+            $this->boundary_msgs['b_name'] = $checkFileExt;
+            return false;
+        }
+
         return true;
     }
+
     public function get_sam_names()
     {
         $sam_names = $this->sam_names();
@@ -45,13 +54,27 @@ class BoundariesController extends Controller
         }
         return $response;
     }
+
     public function view_loader()
     {
         $response = array(
             'sam_names' => $this->get_sam_names(),
         );
 
-         return view('boundaries.boundaryLoader')->with('response', $response);
+        return view('boundaries.boundaryLoader')->with('response', $response);
+    }
+    public function get_file_type($file){
+        $fileType = pathinfo($file->getClientOriginalName(),PATHINFO_EXTENSION);
+        return strtoupper($fileType);
+    }
+    public function validate_file_extension($file)
+    {
+        $fileType = $this->get_file_type($file);
+        $validFile = array('KML','CSV');
+        if (in_array(strtoupper($fileType), $validFile)){
+            return true;
+        }
+        return false;
     }
 
     public function validate_csv_data($bname, $btype)
@@ -109,7 +132,7 @@ class BoundariesController extends Controller
             $header_check = array_udiff($cols, $expected_header, 'strcasecmp');
             if (count($header_check)) {
                 //TODO: Add Notes
-                $this->boundary_msgs['csv_header_error'] = 'CSV header is not in expeceted format!';
+                $this->boundary_msgs['csv_header_error'] = $this->get_file_type($file);
                 return false;
             }
             $valid_data_arr = $this->extract_valid_data($file);
@@ -129,9 +152,79 @@ class BoundariesController extends Controller
 
     }
 
+    public function read_kml_data($file)
+    {
+
+        try {
+            $xml = simplexml_load_file($file);
+            $folder = $xml->Document->Folder;
+            $created_at = new DateTime();
+            $row_str = array();
+            $row_cnt = 0;
+            forEach ($folder as $bound) {
+                $layer_name = $bound->name;
+                $set_layer_valid = false;
+                if ($layer_name == 'nbnBoundary') {
+                    $set_layer_valid = true;
+                }
+                if ($set_layer_valid) {
+                    $placemark = isset($bound->Placemark) ? $bound->Placemark : null;
+                    $style = isset($placemark) ? $placemark->Style : null;
+                    $line_style = (!empty($style)) ? $style->LineStyle->color : null;
+                    $poly_style = (!empty($style)) ? $style->PolyStyle->fill : null;
+                    forEach ($placemark as $pm) {
+
+                        $extended_data = isset($pm->ExtendedData->SchemaData) ? $pm->ExtendedData->SchemaData->SimpleData : null;
+                        $b_geom = isset($pm->Polygon->outerBoundaryIs->LinearRing->coordinates) ? $pm->Polygon->outerBoundaryIs->LinearRing->coordinates : 'noCoords';
+                        $schema_name = null;
+                        $schema_type = null;
+                        $schema_gml_id = null;
+                        if (!empty($extended_data)) {
+                            forEach ($extended_data as $key => $data) {
+                                $data_type = $data['name'];
+                                $schema_name = ($data_type == 'type') ? $data : $schema_type;
+                                $schema_type = ($data_type == 'code') ? $data : $schema_name;
+                                $schema_gml_id = ($data_type == 'gml_id') ? $data : $schema_gml_id;
+                            }
+                        }
+                        if ($schema_name && $schema_type && $b_geom)
+                            $row_str[$row_cnt] = array(
+                                'boundary_type'=> (string) $schema_name,
+                                'boundary_name' => (string) $schema_type,
+                                'created_at' => $created_at,
+                                'added_by' => Auth::user()->name,
+                                'coordinates' => (string) $b_geom);
+
+                        $row_cnt++;
+
+                    }
+                }
+            }
+            if ($row_str)
+                DB::delete('delete from boundaries where boundary_name like \'' . $this->primary_input_boundary . '%\'');
+            DB::table('boundaries')-> insert($row_str);
+            $this->boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
+            return true;
+        }
+        catch (Exception $e) {
+            $this->boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
+            return false;
+        }
+
+    }
+
+
     public function load($file)
     {
-        return $this->read_csv_data($file);
+        $fileType = $this->get_file_type($file);
+        echo $fileType;
+        if ($fileType == 'KML'){
+            return $this->read_kml_data($file);
+        }
+        else {
+             return $this->read_csv_data($file);
+        }
+
     }
 
     public function validate_load_store(Request $r)
