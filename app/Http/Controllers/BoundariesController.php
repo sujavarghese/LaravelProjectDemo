@@ -1,9 +1,11 @@
 <?php
 
+namespace App\Classes;
 namespace App\Http\Controllers;
 
 use App\Boundary;
 use Illuminate\Http\Request;
+use Constants;
 use App\Http\Requests\LoadBoundaryFormRequest;
 use Illuminate\Support\Facades\Storage;
 use DB;
@@ -183,6 +185,15 @@ class BoundariesController extends Controller
             'ogr2ogr -f "MapInfo File" ' . $output_path . ' ' . $input_path,
             $r, $t
         );
+    }
+    public function get_boundary_types()
+    {
+        return $this->defined_boundary_type;
+    }
+    public function get_sam_names()
+    {
+        $cn = new Constants();
+        return $cn->getSAMNames();
     }
     public function get_data()
     {

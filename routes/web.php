@@ -38,6 +38,9 @@ Route::get('boundary/convert_kml_to_mapinfo', 'BoundariesController@convert_kml_
 
 Route::post('boundary/upload', 'BoundariesController@validate_load_store');
 
+Route::get('boundary/sam_names', 'BoundariesController@get_sam_names');
+
+Route::get('boundary/sam_types', 'BoundariesController@get_boundary_types');
 
 Route::get('/mapinfo_validator', function(){
     return view('mapinfoValidator');
