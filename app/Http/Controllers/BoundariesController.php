@@ -77,6 +77,14 @@ class BoundariesController extends Controller
         return false;
     }
 
+    public function map_viewer()
+    {
+        $response = array(
+            'sam_names' => $this->get_sam_names(),
+        );
+        return view('map.mapViewer')->with('response', $response);
+    }
+
     public function validate_csv_data($bname, $btype)
     {
         $p = str_replace('-', '\-', $this->primary_input_boundary);

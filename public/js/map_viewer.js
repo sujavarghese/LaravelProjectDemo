@@ -103,13 +103,21 @@ $(document).ready(function () {
 
     });
 
-
     /**
      * Export boundary submit action.
      */
     $('#exportBoundary').submit(function (event) {
         event.preventDefault();
-
+        var form = $( this ).serialize();
+        $.ajax({
+            url: '',
+            data: {params: form},
+            success: function () {
+                resetInputs();
+            },
+            error: function () {
+                resetInputs();
+            }
+        });
     })
 });
-

@@ -52,9 +52,7 @@ Route::get('/kml_export', function(){
     return view('boundaries.comingSoon');
 });
 
-Route::get('/map', function(){
-    return view('map.mapViewer');
-});
+Route::get('/map', 'BoundariesController@map_viewer');
 
 Route::get('/admin', function(){
     return view('admin_template');

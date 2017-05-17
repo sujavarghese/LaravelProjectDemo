@@ -25,17 +25,28 @@
                     <select class="form-control" id="boundaryType" name="boundaryType" required>
                         <option value="" selected="selected">Select Boundary Type</option>
                         <option value="SAM">SAM</option>
-                        <option value="FSA">FSA</option>
                     </select>
                     <div class="boundary-loading-wrapper">
                         <i class="fa fa-refresh fa-spin boundary-loading display-none"></i>
                     </div>
                 </div>
+
                 <div class="col-sm-3">
-                    <select class="form-control" id="boundaryCode" name="boundaryCode" required disabled="disabled">
-                        <option value="" selected="selected">Select Boundary Code</option>
-                        <option value="SAM">SAM</option>
-                    </select>
+                    {!!
+                        Form::select(
+                            'selBoundaryName',
+                            $response['sam_names'],
+                            null,
+                            [
+                                'class' => 'form-control',
+                                'id' => 'boundaryCode',
+                                'name' => 'boundaryCode',
+                                'required' => true,
+                                'disabled' => 'disabled'
+                            ])
+                    !!}
+                    {{--TODO extract boundary name from database --}}
+
                 </div>
         </div>
         <div class="row goemetry-type-selection display-none">
