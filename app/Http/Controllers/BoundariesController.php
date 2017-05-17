@@ -60,14 +60,14 @@ class BoundariesController extends Controller
      * @param $file : Upload file
      * @return bool
      */
-    public function load($file)
+    public function load($file, $primary_input_boundary)
     {
         $fileType = $this->dataload_utilities->get_file_type($file);
         echo $fileType;
         if ($fileType == 'KML') {
-            return $this->dataload_utilities->read_kml_data($file);
+            return $this->dataload_utilities->read_kml_data($file, $primary_input_boundary);
         } else {
-            return $this->dataload_utilities->read_csv_data($file);
+            return $this->dataload_utilities->read_csv_data($file, $primary_input_boundary);
         }
 
     }
@@ -109,7 +109,7 @@ class BoundariesController extends Controller
 
         $this->primary_input_boundary = $bName;
 
-        $load_result = $this->load($file);
+        $load_result = $this->load($file, $this->primary_input_boundary);
         if (!$load_result)
             $this->boundary_msgs['overall_status'] = 'Failed';
         $this->boundary_msgs['overall_status_reason'] = 'during data insertion';

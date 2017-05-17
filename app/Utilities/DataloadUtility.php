@@ -47,7 +47,7 @@ class DataLoadUtilities
      * @param $file : Uploaded file
      * @return bool
      */
-    public function read_csv_data($file)
+    public function read_csv_data($file, $primary_input_boundary)
     {
 
         try {
@@ -65,7 +65,7 @@ class DataLoadUtilities
             $row_str = $valid_data_arr[0];
             $row_cnt = $valid_data_arr[1];
             if ($row_str)
-                DB::delete('delete from boundaries where boundary_name like \'' . $this->primary_input_boundary . '%\'');
+                DB::delete('delete from boundaries where boundary_name like \'' . primary_input_boundary . '%\'');
             DB::insert('insert into boundaries (boundary_name, boundary_type, created_at, added_by) 
                           values ' . rtrim($row_str, ","));
             $this->boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
@@ -113,9 +113,9 @@ class DataLoadUtilities
      * @param $btype : Boundary Type
      * @return bool|string
      */
-    public function validate_csv_data($bname, $btype)
+    public function validate_csv_data($bname, $btype, $primary_input_boundary)
     {
-        $p = str_replace('-', '\-', $this->primary_input_boundary);
+        $p = str_replace('-', '\-', primary_input_boundary);
         $bname_pattern = '/^' . $p . '*/';
         if (!in_array($btype, $this->defined_boundary_type)) {
             if (!isset($this->boundary_msgs['b_type']))
@@ -138,7 +138,7 @@ class DataLoadUtilities
      * @param $file : Uploaded file
      * @return bool
      */
-    public function read_kml_data($file)
+    public function read_kml_data($file, $primary_input_boundary)
     {
 
         try {
@@ -187,7 +187,7 @@ class DataLoadUtilities
                 }
             }
             if ($row_str)
-                DB::delete('delete from boundaries where boundary_name like \'' . $this->primary_input_boundary . '%\'');
+                DB::delete('delete from boundaries where boundary_name like \'' . $primary_input_boundary . '%\'');
             DB::table('boundaries')->insert($row_str);
             $this->boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
             return true;
