@@ -52,7 +52,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="/boundary_loader">
+                                    <a href="/boundaries/boundary_loader">
                                         Boundary Loader
                                     </a>
                                 </li>

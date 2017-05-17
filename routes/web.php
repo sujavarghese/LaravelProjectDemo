@@ -12,48 +12,43 @@
 */
 Auth::routes();
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
 Route::get('/unknown', function () {
     return view('errorpage');
 });
 
-Route::get('/boundary_loader', 'BoundariesController@view_loader');
+Route::get('boundaries/boundary_loader', 'BoundariesController@index');
 
-Route::get('view_boundaries', 'BoundariesController@get_data');
+Route::get('boundaries/view_boundaries', 'BoundariesController@store');
+
+Route::post('boundaries/upload', 'BoundariesController@create');
 
 Route::resource('boundaries', 'BoundariesController');
 
-Route::get('boundary/export_mapinfo', 'BoundariesController@export_mapinfo');
+Route::get('export/export_mapinfo', 'DataExportController@export_mapinfo');
 
-Route::get('boundary/export_kml', 'BoundariesController@export_kml');
+Route::get('export/export_kml', 'DataExportController@export_kml');
 
-Route::get('boundary/convert_kml_to_mapinfo', 'BoundariesController@convert_kml_to_mapinfo');
+Route::get('export/convert_kml_to_mapinfo', 'DataExportController@convert_kml_to_mapinfo');
 
-Route::post('boundary/upload', 'BoundariesController@validate_load_store');
 
-Route::get('boundary/sam_names', 'BoundariesController@get_sam_names');
-
-Route::get('boundary/sam_types', 'BoundariesController@get_boundary_types');
-
-Route::get('/mapinfo_validator', function(){
+Route::get('/mapinfo_validator', function () {
     return view('mapinfoValidator');
 });
 
-Route::get('/new_menu', function(){
+Route::get('/new_menu', function () {
     return view('newHome');
 });
 
-Route::get('/kml_export', function(){
+Route::get('/kml_export', function () {
     return view('boundaries.comingSoon');
 });
 
-Route::get('/map', 'BoundariesController@map_viewer');
+Route::get('/map', 'MapController@index');
 
-Route::get('/admin', function(){
+Route::get('/admin', function () {
     return view('admin_template');
 });

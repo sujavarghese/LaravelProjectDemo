@@ -6,12 +6,12 @@
         <a href="#"><span>Boundary</span><i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu" role="menu">
             <li>
-                <a href="/boundary_loader">
+                <a href="/boundaries/boundary_loader">
                     Boundary Loader
                 </a>
             </li>
             <li>
-                <a href="/view_boundaries">
+                <a href="/boundaries/view_boundaries">
                     View Boundaries
                 </a>
             </li>

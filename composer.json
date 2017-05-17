@@ -22,8 +22,7 @@
         "classmap": [
             "database",
             "app/Classes",
-            "app/Libraries",
-            "app/Services"
+            "app/Utilities"
         ],
         "psr-4": {
             "App\\": "app/",

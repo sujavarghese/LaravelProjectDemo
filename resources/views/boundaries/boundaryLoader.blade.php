@@ -27,11 +27,11 @@
 
                         <!-- form-start -->
                         <div>
-                            <h6 class="box-title">This tools allows user to Boundary data loader in a specified CSV/KML format</h6>
+                            <h6 class="box-title">This tools allows user to Boundary data loader in a specified KML format</h6>
                             {{--TODO: Provide details about CSV format--}}
                             {!! Form::open(
                                 array(
-                                    'url' => 'boundary/upload',
+                                    'url' => 'boundaries/upload',
                                     'class' => 'form-horizontal',
                                     'method' => 'POST',
                                     'files' => true
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile" class="col-sm-5 control-label">
-                                        Upload Boundary CSV/KML file: </label>
+                                        Upload Boundary KML file: </label>
 
                                     <div class="col-sm-5">
 
@@ -98,6 +98,29 @@
             </div>
         </div>
     </div>
+
+    @if (count($errors) > 0)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4 class="box-title">Status</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     @if(Session::has('boundary_msgs'))
         <div class="container">
             <div class="row">
@@ -113,7 +136,7 @@
                                     <label class="control-label">
                                         <i class="fa fa-check"></i> Passed
                                     </label>
-                                    <br><a href="/view_boundaries" class="btn btn-primary btn-xs">Click Here</a> to be view loaded boundaries.
+                                    <br><a href="/boundaries/view_boundaries" class="btn btn-primary btn-xs">Click Here</a> to be view loaded boundaries.
                                 </div>
                             @endif
                             @if(Session::get('boundary_msgs.overall_status') == 'Failed')
@@ -137,7 +160,6 @@
                                         ?>
                                     </div>
                                 @endif
-
                             </div>
                         </div>
                     </div>
