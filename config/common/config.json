@@ -1,0 +1,24 @@
+{
+  "nbnBoundary": {
+    "displayname": "boundary",
+    "tablename": "boundary",
+    "mandatory": true,
+    "attributes": {
+      "gml_id": {
+        "type": "char",
+        "tblcolumnname": "gml_id",
+        "mandatory": true
+      },
+      "code": {
+        "type": "char",
+        "tblcolumnname": "code",
+        "mandatory": true
+      },
+      "type": {
+        "type": "char",
+        "tblcolumnname": "type",
+        "mandatory": true
+      }
+    }
+  }
+}
