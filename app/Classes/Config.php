@@ -19,20 +19,9 @@ class Config
     public $app_path;
     public $upload_path;
     public $download_path;
-        $db_name = "laraveldemodb";
-        $user = 'root';
-        $host = 'localhost';
-        $port = '3306';
-        $table = 'boundaries';
 
     public function __construct()
     {
-        $this->db_name = "laraveldemodb";
-        $this->user = 'root';
-        $host = 'localhost';
-        $port = '3306';
-        $table = 'boundaries';
-
         $this->boundary_configs = $this->read_config();
         $this->boundary_column_details = $this->get_column_names();
 
@@ -52,7 +41,7 @@ class Config
         $layer_name = array();
         $column_names = array();
 
-        $json_a = $this->all_configs;
+        $json_a = $this->boundary_configs;
 
         forEach ($json_a as $key => $val)
         {

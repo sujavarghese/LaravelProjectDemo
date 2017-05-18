@@ -138,7 +138,6 @@ class BoundariesController extends Controller
         return $cn->getSAMNames();
     }
 
-
     public function store()
     {
         $data = Boundary::all();

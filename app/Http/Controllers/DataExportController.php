@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+namespace App\Classes;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use App\Utilities\DataLoadUtilities;
+use Config;
+use Constants;
+
 
 class DataExportController extends Controller
 {
@@ -10,6 +16,14 @@ class DataExportController extends Controller
      * Function to export mapinfo
      * @return array
      */
+    public $dataload_utilities;
+    public $generic_config;
+
+    public function __construct()
+    {
+        $this->dataload_utilities = new DataLoadUtilities();
+        $this->generic_config = new Config();
+    }
     public function export_mapinfo()
     {
         $data = array();
@@ -68,10 +82,12 @@ class DataExportController extends Controller
             $queryset = Boundary::whereIn('code', $filter_in)
                 ->orderBy('code', 'desc')
                 ->get()->toArray();
+
             $response = $this->dataload_utilities->generate_kml($queryset);
             $path_to_file = $this->dataload_utilities->join_path(
                 $this->generic_config->download_path, $code . time() . '.kml'
             );
+
             return response('response', $response)->download($path_to_file)->deleteFileAfterSend(true);
         }
         return NULL;
@@ -88,5 +104,4 @@ class DataExportController extends Controller
             $r, $t
         );
     }
-
 }
