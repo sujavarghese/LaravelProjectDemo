@@ -29,12 +29,10 @@ class GenericConfig
         $this->app_path = app_path();
         $this->upload_path = $this->public_path . DIRECTORY_SEPARATOR . 'uploads';
         $this->download_path = $this->public_path . DIRECTORY_SEPARATOR . 'downloads';
-        echo 'within construct';
-        echo $this->boundary_column_details;
     }
     private function read_config()
     {
-        $config_path = config_path() . DIRECTORY_SEPARATOR . 'config.json';
+        $config_path = config_path() . DIRECTORY_SEPARATOR . 'common' . DIRECTORY_SEPARATOR . 'config.json';
         $string = file_get_contents($config_path);
         return json_decode($string, true);
     }
