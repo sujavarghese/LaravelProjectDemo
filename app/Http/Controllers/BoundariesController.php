@@ -94,12 +94,15 @@ class BoundariesController extends Controller
             ]
         );
         $file_validation = $this->dataload_utilities->validate_file_extension(Input::file('boundaryCsvFile'));
-
+        $structure_validation = $this->dataload_utilities->validate_kml(Input::file('boundaryCsvFile'));
         //check if file is kml
-        if (!$file_validation) {
+        if (!$file_validation || !$structure_validation) {
 
             $error = array();
-            $error[] = "File type must be kml";
+            if (!$file_validation)
+                $error[] = "File type must be kml";
+            else
+                $error[] = "Invalid structure";
             $validator = $error;
             return Redirect::to('boundaries/boundary_loader')->withErrors($validator);
         }

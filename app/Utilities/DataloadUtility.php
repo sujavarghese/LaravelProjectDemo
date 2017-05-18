@@ -175,7 +175,6 @@ class DataLoadUtilities
      * @return bool
      */
     public function get_layer_name($details){
-
         forEach($details as $layer=>$name) {
             array_push($this->layerName,$layer);
             forEach ($name as $dbVal) {
@@ -184,7 +183,33 @@ class DataLoadUtilities
                     array_push($this->columnMandatory,$dbVal['tblcolumnname']);
             }
         }
+        return true;
     }
+
+    public function validate_kml($file){
+        try {
+            libxml_use_internal_errors(true);
+            $sxe = simplexml_load_file($file);
+            if (false === $sxe)
+                return $sxe;
+            if (!($sxe->xpath("//Folder"))){
+                return false;
+            }
+            if (!($sxe->xpath("//Folder/Placemark/ExtendedData/SchemaData"))){
+                return false;
+            }
+            if (!($sxe->xpath("//Folder/Placemark/Polygon/outerBoundaryIs/LinearRing/coordinates"))){
+                return false;
+            }
+            return true;
+        }
+        catch (Exception $e) {
+
+            return false;
+        }
+
+    }
+
     public function read_kml_data($file, $primary_input_boundary)
     {
 
@@ -212,7 +237,6 @@ class DataLoadUtilities
                         $b_geom = isset($pm->Polygon->outerBoundaryIs->LinearRing->coordinates) ? $pm->Polygon->outerBoundaryIs->LinearRing->coordinates : 'noCoords';
                         $getValue = array();
                         if (!empty($extended_data)) {
-
                             forEach ($extended_data as $key => $data) {
                                 $data_type = $data['name'];
                                 if (in_array($data_type,$this->tableColumnName)){
