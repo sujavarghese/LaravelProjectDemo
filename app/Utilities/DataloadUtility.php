@@ -12,7 +12,7 @@ use Session;
 use Auth;
 use DateTime;
 
-use Config;
+use GenericConfig;
 use Constants;
 
 class DataLoadUtilities
@@ -36,11 +36,12 @@ class DataLoadUtilities
 
     function generate_kml($results)
     {
-        $config = new Config();
+        $config = new GenericConfig();
         $response = array(
-            'root_tag_name' => $config->boundary_column_details[0],
-            'attr_list' => $config->boundary_column_details[1],
+            'root_tag_name' => 'boundary',
+            'attr_list' => $config->boundary_column_details,
         );
+        echo $response;
         $boundary_details = array();
         $attr_list = array();
 

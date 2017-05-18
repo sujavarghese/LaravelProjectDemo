@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Boundary;
 use Illuminate\Http\Request;
 use Constants;
-use Config;
+use GenericConfig;
 use App\Http\Requests\LoadBoundaryFormRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Utilities\DataLoadUtilities;
@@ -30,7 +30,7 @@ class BoundariesController extends Controller
     public function __construct()
     {
         $this->dataload_utilities = new DataLoadUtilities();
-        $this->generic_config = new Config();
+        $this->generic_config = new GenericConfig();
     }
 
     public function get_sam_names()

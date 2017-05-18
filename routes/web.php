@@ -30,7 +30,7 @@ Route::resource('boundaries', 'BoundariesController');
 
 Route::get('export/export_mapinfo', 'DataExportController@export_mapinfo');
 
-Route::get('export/export_kml', 'DataExportController@export_kml');
+Route::get('export/kml/{code}', 'DataExportController@export_kml');
 
 Route::get('export/convert_kml_to_mapinfo', 'DataExportController@convert_kml_to_mapinfo');
 

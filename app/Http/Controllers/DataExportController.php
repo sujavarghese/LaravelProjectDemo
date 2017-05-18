@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
 namespace App\Classes;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use App\Utilities\DataLoadUtilities;
-use Config;
-use Constants;
-
+use GenericConfig;
+use App\Boundary;
 
 class DataExportController extends Controller
 {
@@ -22,7 +20,7 @@ class DataExportController extends Controller
     public function __construct()
     {
         $this->dataload_utilities = new DataLoadUtilities();
-        $this->generic_config = new Config();
+        $this->generic_config = new GenericConfig();
     }
     public function export_mapinfo()
     {
@@ -79,8 +77,8 @@ class DataExportController extends Controller
             $filter_in = array($code);
         }
         if ($filter_in != NULL) {
-            $queryset = Boundary::whereIn('code', $filter_in)
-                ->orderBy('code', 'desc')
+            $queryset = Boundary::whereIn('boundary_name', $filter_in)
+                ->orderBy('boundary_name', 'desc')
                 ->get()->toArray();
 
             $response = $this->dataload_utilities->generate_kml($queryset);
