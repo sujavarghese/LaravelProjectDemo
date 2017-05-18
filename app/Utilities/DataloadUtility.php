@@ -23,6 +23,11 @@ class DataLoadUtilities
      * @param $file : Input file
      * @return string
      */
+    public $layerName = array();
+    public $tableColumnName = array();
+    public $columnMandatory = array();
+
+
     public function get_file_type($file)
     {
         $fileType = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -169,10 +174,23 @@ class DataLoadUtilities
      * @param $file : Uploaded file
      * @return bool
      */
+    public function get_layer_name($details){
+
+        forEach($details as $layer=>$name) {
+            array_push($this->layerName,$layer);
+            forEach ($name as $dbVal) {
+                array_push($this->tableColumnName,$dbVal['tblcolumnname']);
+                if ($dbVal['mandatory'])
+                    array_push($this->columnMandatory,$dbVal['tblcolumnname']);
+            }
+        }
+    }
     public function read_kml_data($file, $primary_input_boundary)
     {
 
         try {
+            $config = new GenericConfig();
+            $this->get_layer_name($config->boundary_column_details);
             $xml = simplexml_load_file($file);
             $folder = $xml->Document->Folder;
             $created_at = new DateTime();
@@ -181,7 +199,7 @@ class DataLoadUtilities
             forEach ($folder as $bound) {
                 $layer_name = $bound->name;
                 $set_layer_valid = false;
-                if ($layer_name == 'nbnBoundary') {
+                if (in_array($layer_name,$this->layerName)) {
                     $set_layer_valid = true;
                 }
                 if ($set_layer_valid) {
@@ -190,30 +208,28 @@ class DataLoadUtilities
                     $line_style = (!empty($style)) ? $style->LineStyle->color : null;
                     $poly_style = (!empty($style)) ? $style->PolyStyle->fill : null;
                     forEach ($placemark as $pm) {
-
                         $extended_data = isset($pm->ExtendedData->SchemaData) ? $pm->ExtendedData->SchemaData->SimpleData : null;
                         $b_geom = isset($pm->Polygon->outerBoundaryIs->LinearRing->coordinates) ? $pm->Polygon->outerBoundaryIs->LinearRing->coordinates : 'noCoords';
-                        $schema_name = null;
-                        $schema_type = null;
-                        $schema_gml_id = null;
+                        $getValue = array();
                         if (!empty($extended_data)) {
+
                             forEach ($extended_data as $key => $data) {
                                 $data_type = $data['name'];
-                                $schema_name = ($data_type == 'type') ? $data : $schema_type;
-                                $schema_type = ($data_type == 'code') ? $data : $schema_name;
-                                $schema_gml_id = ($data_type == 'gml_id') ? $data : $schema_gml_id;
+                                if (in_array($data_type,$this->tableColumnName)){
+                                    $getValue[(string)$data_type] = (string)$data;
+                                }
                             }
                         }
-                        if ($schema_name && $schema_type && $b_geom)
+                        if (isset($getValue['type']) && isset($getValue['code'])){
                             $row_str[$row_cnt] = array(
-                                'boundary_type' => (string)$schema_name,
-                                'boundary_name' => (string)$schema_type,
+                                'boundary_type' => $getValue['type'],
+                                'boundary_name' =>$getValue['code'],
                                 'created_at' => $created_at,
                                 'added_by' => Auth::user()->name,
-                                'coordinates' => (string)$b_geom);
-
-                        $row_cnt++;
-
+                                'coordinates'=>$b_geom,
+                            );
+                            $row_cnt++;
+                        }
                     }
                 }
             }

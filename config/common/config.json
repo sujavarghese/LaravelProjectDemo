@@ -6,12 +6,12 @@
     "attributes": {
       "code": {
         "type": "char",
-        "tblcolumnname": "boundary_name",
+        "tblcolumnname": "code",
         "mandatory": true
       },
       "type": {
         "type": "char",
-        "tblcolumnname": "boundary_type",
+        "tblcolumnname": "type",
         "mandatory": true
       },
       "others": {

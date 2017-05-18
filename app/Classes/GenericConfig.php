@@ -40,7 +40,8 @@ class GenericConfig
     {
         $layer_name = array();
         $column_names = array();
-
+        $attribute = array();
+        $tableName = array();
         $json_a = $this->boundary_configs;
 
         forEach ($json_a as $key => $val)
@@ -52,10 +53,12 @@ class GenericConfig
                 if ($str == 'attributes')
                     forEach ($val[$str] as $dbcol => $dbVal)
                     {
+                        array_push($tableName,$dbVal);
                         array_push($column_names, $dbVal['tblcolumnname']);
                     }
+                    $attribute =  array($key => $tableName);
             }
         }
-        return $column_names;
+        return $attribute;
     }
 }

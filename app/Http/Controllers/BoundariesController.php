@@ -115,6 +115,7 @@ class BoundariesController extends Controller
             $this->boundary_msgs['overall_status'] = 'Failed';
         $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
 
+
         Session::put('boundary_msgs', $this->boundary_msgs);
 
         return Redirect::to('boundaries/boundary_loader');
