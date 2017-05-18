@@ -4,11 +4,10 @@ namespace App\Classes;
 
 namespace App\Http\Controllers;
 
-//namespace App\Utilities;
-
 use App\Boundary;
 use Illuminate\Http\Request;
 use Constants;
+use Config;
 use App\Http\Requests\LoadBoundaryFormRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Utilities\DataLoadUtilities;
@@ -26,10 +25,12 @@ class BoundariesController extends Controller
     public $primary_input_boundary = [];
     public $defined_boundary_type = array('SAM', 'ADA');
     public $dataload_utilities;
+    public $generic_config;
 
     public function __construct()
     {
         $this->dataload_utilities = new DataLoadUtilities();
+        $this->generic_config = new Config();
     }
 
     public function get_sam_names()
@@ -118,7 +119,6 @@ class BoundariesController extends Controller
 
         return Redirect::to('boundaries/boundary_loader');
     }
-
     /**
      * Function to get boundary types
      * @return array of boundary types

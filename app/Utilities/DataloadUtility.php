@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Classes;
 namespace App\Utilities;
 
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +12,8 @@ use Session;
 use Auth;
 use DateTime;
 
+use Config;
+use Constants;
 
 class DataLoadUtilities
 {
@@ -26,6 +29,33 @@ class DataLoadUtilities
         return strtoupper($fileType);
     }
 
+    public function join_path($path, $file)
+    {
+        return $path . DIRECTORY_SEPARATOR . $file;
+    }
+
+    function generate_kml($results)
+    {
+        $config = new Config();
+        $response = array(
+            'root_tag_name' => $config->boundary_column_details[0],
+            'attr_list' => $config->boundary_column_details[1],
+        );
+        $boundary_details = array();
+        $attr_list = array();
+
+        foreach ($results as $key => $value) {
+            if ($key != 'boundary_details') {
+                $attr_list[] = $key;
+                $boundary_details[$key] = $value;
+            }
+        }
+        foreach ($results['boundary_details'] as $key => $value) {
+            $attr_list[] = $key;
+            $boundary_details[$key] = $value;
+        }
+        return$response;
+    }
     /**
      * Function to validate file extension
      * @param $file : Input file

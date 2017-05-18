@@ -34,7 +34,7 @@ class DataExportController extends Controller
      * Function to export kml
      * @return array
      */
-    public function export_kml()
+    public function export_kml_ogr()
     {
         $data = array();
         $r = array();
@@ -53,7 +53,29 @@ class DataExportController extends Controller
         $data['status'] = $t;
         return $data;
     }
-
+    /**
+     * Function to store uploaded boundary data
+     * @param Request $r
+     */
+    public function export_kml($code)
+    {
+        if (is_array($code)) {
+            $filter_in = $code;
+        } else {
+            $filter_in = array($code);
+        }
+        if ($filter_in != NULL) {
+            $queryset = Boundary::whereIn('code', $filter_in)
+                ->orderBy('code', 'desc')
+                ->get()->toArray();
+            $response = $this->dataload_utilities->generate_kml($queryset);
+            $path_to_file = $this->dataload_utilities->join_path(
+                $this->generic_config->download_path, $code . time() . '.kml'
+            );
+            return response('response', $response)->download($path_to_file)->deleteFileAfterSend(true);
+        }
+        return NULL;
+    }
     /**
      * Function to convert kml to mapinfo
      */

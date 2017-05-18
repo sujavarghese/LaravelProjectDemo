@@ -4,11 +4,6 @@
     "tablename": "boundary",
     "mandatory": true,
     "attributes": {
-      "gml_id": {
-        "type": "char",
-        "tblcolumnname": "gml_id",
-        "mandatory": true
-      },
       "code": {
         "type": "char",
         "tblcolumnname": "code",
@@ -18,6 +13,11 @@
         "type": "char",
         "tblcolumnname": "type",
         "mandatory": true
+      },
+      "others": {
+        "type": "JSON",
+        "tblcolumnname": "boundary_details",
+        "mandatory": false
       }
     }
   }
