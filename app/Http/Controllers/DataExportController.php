@@ -73,7 +73,7 @@ class DataExportController extends Controller
      * Function to store uploaded boundary data
      * @param Request $r
      */
-    public function export_kml($code)
+    public function export_kml($type, $code)
     {
         if (is_array($code)) {
             $filter_in = $code;

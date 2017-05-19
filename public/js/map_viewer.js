@@ -187,11 +187,13 @@ $(document).ready(function () {
      */
     $('#boundaryCode').change(function () {
         var bCode = $(this).val();
+        var bType = $('#boundaryType').val();
         if(bCode) {
+            $('#submit').attr("href", '/export/kml/'+bType+'/'+bCode);
             $.ajax({
                 url: '/boundaries/get_coordinates',
                 method:'POST',
-                data: {selBoundaryName: bCode, selBoundaryType: $('#boundaryType').val()},
+                data: {selBoundaryName: bCode, selBoundaryType: bType},
                 success: function (data) {
                     if(data && data[0]) {
                         addFeature(data[0].coordinates);
@@ -207,24 +209,24 @@ $(document).ready(function () {
 
     });
 
-    /**
-     * Export boundary submit action.
-     */
-    $('#exportBoundary').submit(function (event) {
-        event.preventDefault();
-        var form = $( this ).serialize();
-        $.ajax({
-            url: '',
-            method:'POST',
-            data: {params: form},
-            success: function () {
-                resetInputs();
-            },
-            error: function () {
-                resetInputs();
-            }
-        });
-    });
+    // /**
+    //  * Export boundary submit action.
+    //  */
+    // $('#exportBoundary').submit(function (event) {
+    //     event.preventDefault();
+    //     var form = $( this ).serialize();
+    //     $.ajax({
+    //         url: '/export/kml/' + $('#boundaryType').val() + '/' + $('#boundaryCode').val(),
+    //         method:'GET',
+    //         data: {params: form},
+    //         success: function () {
+    //             resetInputs();
+    //         },
+    //         error: function () {
+    //             resetInputs();
+    //         }
+    //     });
+    // });
 
     /**
      * Function to set boundary code from query string

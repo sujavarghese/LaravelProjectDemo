@@ -40,6 +40,7 @@
                                                         <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 183px;" aria-label="Platform(s): activate to sort column ascending">Added By</th>
                                                         <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 143px;" aria-label="Engine version: activate to sort column ascending">When</th>
                                                         <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 101px;" aria-label="CSS grade: activate to sort column ascending">View in Map</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 101px;" aria-label="CSS grade: activate to sort column ascending">Export KML</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -50,6 +51,7 @@
                                                         <td class="">{!! $row->added_by !!}</td>
                                                         <td class="">{!! $row->created_at !!}</td>
                                                         <td><a href="/map?boundaryType={!! $row->boundary_type !!}&boundaryCode={!! $row->boundary_name  !!}">View</a> </td>
+                                                        <td><a href="/export/kml/{!! $row->boundary_type !!}/{!! $row->boundary_name  !!}">Export</a> </td>
                                                     </tr>
                                                 @endforeach
 

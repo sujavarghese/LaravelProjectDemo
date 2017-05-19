@@ -41,7 +41,7 @@
 
                 </div>
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary ">Export</button>
+                    <a id="submit" class="btn btn-primary ">Export</a>
                 </div>
         </div>
         <div class="row goemetry-type-selection display-none">
@@ -57,7 +57,7 @@
                 </select>
             </div>
             <div class="col-sm-3">
-                <button type="submit" class="btn btn-primary ">Export</button>
+                <button class="btn btn-primary ">Export</button>
             </div>
             </form>
         </div>

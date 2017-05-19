@@ -36,7 +36,7 @@ Route::get('/export/mapinfo', 'DataExportController@export_mapinfo');
 
 Route::get('/export', 'DataExportController@index');
 
-Route::get('/export/kml/{code}', 'DataExportController@export_kml');
+Route::get('/export/kml/{type}/{code}', 'DataExportController@export_kml');
 
 Route::get('/export/convert_kml_to_mapinfo', 'DataExportController@convert_kml_to_mapinfo');
 
