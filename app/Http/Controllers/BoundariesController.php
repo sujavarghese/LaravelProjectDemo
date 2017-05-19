@@ -121,7 +121,7 @@ class BoundariesController extends Controller
             $validator = $error;
             return Redirect::to('boundaries/boundary_loader')->withErrors($validator);
         }
-        $this->boundary_msgs['overall_status'] = 'Pass';
+        $this->boundary_msgs['overall_status'] = '&nbsp;&nbsp;&nbsp;<br/><b> Pass </b>';
         $file = Input::file('boundaryCsvFile');
         $bType = $r->get('selBoundaryType');
         $bName = $r->get('selBoundaryName');
@@ -132,7 +132,7 @@ class BoundariesController extends Controller
         $this->boundary_msgs = $load_result['msg'];
 
         if (!$load_result['status'])
-            $this->boundary_msgs['overall_status'] = 'Failed';
+            $this->boundary_msgs['overall_status'] = '<b> Pass </b>';
             $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
 
 

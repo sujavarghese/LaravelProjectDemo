@@ -269,17 +269,18 @@ class DataLoadUtilities
                         $extended_data = isset($pm->ExtendedData->SchemaData) ? $pm->ExtendedData->SchemaData->SimpleData : null;
                         $b_geom = isset($pm->Polygon->outerBoundaryIs->LinearRing->coordinates) ? $pm->Polygon->outerBoundaryIs->LinearRing->coordinates : null;
                         $getValue = array();
+                        $getValue['coordinates'] = (string)$b_geom;
                         if (!empty($extended_data)) {
                             forEach ($extended_data as $key => $data) {
                                 $data_type = $data['name'];
                                 if (in_array($data_type,$this->tableColumnName)){
-                                    if ((string)$data)
-                                        $getValue[(string)$data_type] = (string)$data;
+                                    if ($data)
+                                        $getValue[(string)$data_type] = (string)$data ? (string)$data : null;
                                 }
                             }
                         }
                         if (isset($getValue['type']) && isset($getValue['code']) &&$b_geom){
-                            $getValue['coordinates'] = (string)$b_geom;
+
                             $row_str[$row_cnt] = array(
                                 'boundary_type' => $getValue['type'],
                                 'boundary_name' => $getValue['code'],
@@ -290,6 +291,7 @@ class DataLoadUtilities
                             $row_cnt++;
                         }
                         forEach( $getValue as $col=>$cname){
+                            if ( !isset($array[$key]) || $array[$key] == "" || is_null($array[$key]) )
                             if (in_array($col, $this->columnMandatory)){
                                 if (!$cname){
                                     $validation_res[$col]= isset($validation_res[$col]) ? ++$validation_res[$col] : 1;
@@ -299,17 +301,19 @@ class DataLoadUtilities
 
                         }
                     }
+
                 }
+
             }
             if ($row_str)
                 DB::delete('delete from boundaries where boundary_name like \'' . $primary_input_boundary . '%\'');
             DB::table('boundaries')->insert($row_str);
-            $boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
+            $boundary_msgs['insertion_success_msg'] = '&nbsp;&nbsp;&nbsp;<br/><b>' . $row_cnt . '</b> boundary rows are inserted to database';
             if ($validation_res){
                 $errmsg = '';
 
                 forEach($validation_res as $key=>$val){
-                    $errmsg .='<b> Mandatory field '.$key. ' missing count : ' .$val.'</b><br/>';
+                    $errmsg .='&nbsp;&nbsp;&nbsp;<br/><b> Mandatory field '.$key. ' missing count : ' .$val.'</b>';
                 }
                 if ($errmsg){
                     $boundary_msgs['validation_results'] = $errmsg;

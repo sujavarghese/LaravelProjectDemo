@@ -152,7 +152,7 @@
                                     <div class="alert-box success">
                                         <ul>
                                             @foreach(Session::get('boundary_msgs') as $k => $msg)
-                                                <li>{!! $k !!} - {!! $msg !!}</li>
+                                                <li>{!! $k !!}: {!! $msg !!}</li>
                                             @endforeach
                                         </ul>
                                         <?php
