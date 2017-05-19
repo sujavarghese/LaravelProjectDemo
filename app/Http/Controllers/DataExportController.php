@@ -16,6 +16,7 @@ class DataExportController extends Controller
      */
     public $dataload_utilities;
     public $generic_config;
+    public $excluding_columns = ['added_by','created_at'];
 
     public function __construct()
     {
@@ -86,7 +87,7 @@ class DataExportController extends Controller
                 ->get()->toArray();
 
             $response = $this->dataload_utilities->generate_kml();
-            $response['boundary_details'] = $this->dataload_utilities->exclude_columns_from_response(['added_by','created_at'], $queryset);
+            $response['boundary_details'] = $this->dataload_utilities->exclude_columns_from_response($this->excluding_columns, $queryset);
             $file_name = $code . '_' . time() . '.kml';
             $response['file_name'] = $file_name;
             return response()->view('boundaries.kml', compact('response'))->header(

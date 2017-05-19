@@ -189,7 +189,6 @@ $(document).ready(function () {
         var bCode = $(this).val();
         var bType = $('#boundaryType').val();
         if(bCode) {
-            $('#submit').attr("href", '/export/kml/'+bType+'/'+bCode);
             $.ajax({
                 url: '/boundaries/get_coordinates',
                 method:'POST',
@@ -206,27 +205,18 @@ $(document).ready(function () {
                 }
             });
         }
-
     });
 
-    // /**
-    //  * Export boundary submit action.
-    //  */
-    // $('#exportBoundary').submit(function (event) {
-    //     event.preventDefault();
-    //     var form = $( this ).serialize();
-    //     $.ajax({
-    //         url: '/export/kml/' + $('#boundaryType').val() + '/' + $('#boundaryCode').val(),
-    //         method:'GET',
-    //         data: {params: form},
-    //         success: function () {
-    //             resetInputs();
-    //         },
-    //         error: function () {
-    //             resetInputs();
-    //         }
-    //     });
-    // });
+    $('#submit').click(function () {
+        var bCode = $("#boundaryCode").val();
+        var bType = $('#boundaryType').val();
+        if (bCode && bType){
+            $('#submit').attr("href", '/export/kml/'+bType+'/'+bCode);
+        }  else {
+            $('#submit').attr("href", '#');
+            alert("Please select a Boundary Type and Boundary code");
+        }
+    });
 
     /**
      * Function to set boundary code from query string
