@@ -14,10 +14,10 @@
         "tblcolumnname": "type",
         "mandatory": true
       },
-      "others": {
-        "type": "JSON",
-        "tblcolumnname": "boundary_details",
-        "mandatory": false
+      "coordinates": {
+        "type": "char",
+        "tblcolumnname": "coordinates",
+        "mandatory": true
       }
     }
   }

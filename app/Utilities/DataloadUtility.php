@@ -3,7 +3,6 @@
 namespace App\Classes;
 namespace App\Utilities;
 
-use Illuminate\Support\Facades\Storage;
 use DB;
 use Input;
 use Validator;
@@ -13,7 +12,6 @@ use Auth;
 use DateTime;
 
 use GenericConfig;
-use Constants;
 
 class DataLoadUtilities
 {
@@ -38,29 +36,36 @@ class DataLoadUtilities
     {
         return $path . DIRECTORY_SEPARATOR . $file;
     }
-
-    function generate_kml($results)
+    function generate_kml()
     {
         $config = new GenericConfig();
+        $layer_names = array();
+        forEach ($config->boundary_configs as $key => $val){
+            $layer_names[] = $key;
+        }
+//        if (empty($layer_names) == false) {
+//            throw new ConfigException("No layers found in config");
+//        }
         $response = array(
-            'root_tag_name' => 'boundary',
+            'root_tag_name' => $layer_names[0],
             'attr_list' => $config->boundary_column_details,
         );
-        echo $response;
-        $boundary_details = array();
-        $attr_list = array();
-
-        foreach ($results as $key => $value) {
-            if ($key != 'boundary_details') {
-                $attr_list[] = $key;
-                $boundary_details[$key] = $value;
+        return $response;
+    }
+    public static function exclude_columns_from_response($column_names, $results) {
+        $response = array();
+        foreach ($results as $index => $result) {
+            $k = array();
+            forEach ($result as $key => $val) {
+                if (in_array($key, $column_names)) {
+                    //
+                } else {
+                    $k[$key] = $val;
+                }
             }
+            $response[$index] = $k;
         }
-        foreach ($results['boundary_details'] as $key => $value) {
-            $attr_list[] = $key;
-            $boundary_details[$key] = $value;
-        }
-        return$response;
+        return $response;
     }
     /**
      * Function to validate file extension
