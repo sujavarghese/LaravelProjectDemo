@@ -6,18 +6,35 @@ $(document).ready(function () {
         }
     });
 
+    $.extend({
+        getUrlVars: function(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+        getUrlVar: function(name){
+            return $.getUrlVars()[name];
+        }
+    });
 
     var feature = new ol.Feature({
     });
 
     var style = new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: 'rgba(255, 255, 255, 0.6)'
-        }),
         stroke: new ol.style.Stroke({
-            color: '#319FD3',
-            width: 1
+            color: [255,0,0,0.6],
+            width: 2
         }),
+        fill: new ol.style.Fill({
+            color: [255,0,0,0.2]
+        }),
+        zIndex: 1,
         image: new ol.style.Circle({
             radius: 5,
             fill: new ol.style.Fill({
@@ -129,12 +146,12 @@ $(document).ready(function () {
         view.fit(polygon, {padding: [170, 50, 30, 150]});
     }
 
-
     /**
-     * Handle change event for boundary type select.
+     * Function to get boundary codes
+     * @param callback: Callback to set boundary code if query string has boundary code
      */
-    $('#boundaryType').change(function () {
-        var bType = $(this).val();
+    function getBoundaryCodes(callback) {
+        var bType = $('#boundaryType').val();
         if(bType) {
             $('.boundary-loading').removeClass('display-none');
             $.ajax({
@@ -146,6 +163,7 @@ $(document).ready(function () {
                         $('#boundaryCode').append($('<option>').text(value).attr('value', value));
                     });
                     resetInputs();
+                    if(callback) callback();
                 },
                 error: function () {
                     resetInputs();
@@ -154,6 +172,13 @@ $(document).ready(function () {
         } else {
             resetInputs();
         }
+    }
+
+    /**
+     * Handle change event for boundary type select.
+     */
+    $('#boundaryType').change(function () {
+        getBoundaryCodes();
     });
 
 
@@ -199,5 +224,18 @@ $(document).ready(function () {
                 resetInputs();
             }
         });
-    })
+    });
+
+    /**
+     * Function to set boundary code from query string
+     */
+    function setBoundaryCode() {
+        $('#boundaryCode').val($.getUrlVar('boundaryCode'));
+        $('#boundaryCode').trigger('change');
+    }
+
+    if($.getUrlVar('boundaryType') && $.getUrlVar('boundaryCode')) {
+        $('#boundaryType').val($.getUrlVar('boundaryType'));
+        getBoundaryCodes(setBoundaryCode);
+    }
 });

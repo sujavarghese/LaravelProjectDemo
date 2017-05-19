@@ -49,7 +49,7 @@
                                                         <td class="">{!! $row->boundary_name  !!}</td>
                                                         <td class="">{!! $row->added_by !!}</td>
                                                         <td class="">{!! $row->created_at !!}</td>
-                                                        <td><a href="#" data-toggle="modal" data-target="#viewBoundariesMapModal">View</a> </td>
+                                                        <td><a href="/map?boundaryType={!! $row->boundary_type !!}&boundaryCode={!! $row->boundary_name  !!}">View</a> </td>
                                                     </tr>
                                                 @endforeach
 
