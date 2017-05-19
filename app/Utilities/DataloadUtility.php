@@ -252,6 +252,7 @@ class DataLoadUtilities
             $folder = $xml->Document->Folder;
             $created_at = new DateTime();
             $row_str = array();
+            $validation_res = array();
             $row_cnt = 0;
             forEach ($folder as $bound) {
                 $layer_name = $bound->name;
@@ -266,25 +267,36 @@ class DataLoadUtilities
                     $poly_style = (!empty($style)) ? $style->PolyStyle->fill : null;
                     forEach ($placemark as $pm) {
                         $extended_data = isset($pm->ExtendedData->SchemaData) ? $pm->ExtendedData->SchemaData->SimpleData : null;
-                        $b_geom = isset($pm->Polygon->outerBoundaryIs->LinearRing->coordinates) ? $pm->Polygon->outerBoundaryIs->LinearRing->coordinates : 'noCoords';
+                        $b_geom = isset($pm->Polygon->outerBoundaryIs->LinearRing->coordinates) ? $pm->Polygon->outerBoundaryIs->LinearRing->coordinates : null;
                         $getValue = array();
                         if (!empty($extended_data)) {
                             forEach ($extended_data as $key => $data) {
                                 $data_type = $data['name'];
                                 if (in_array($data_type,$this->tableColumnName)){
-                                    $getValue[(string)$data_type] = (string)$data;
+                                    if ((string)$data)
+                                        $getValue[(string)$data_type] = (string)$data;
                                 }
                             }
                         }
-                        if (isset($getValue['type']) && isset($getValue['code'])){
+                        if (isset($getValue['type']) && isset($getValue['code']) &&$b_geom){
+                            $getValue['coordinates'] = (string)$b_geom;
                             $row_str[$row_cnt] = array(
                                 'boundary_type' => $getValue['type'],
-                                'boundary_name' =>$getValue['code'],
+                                'boundary_name' => $getValue['code'],
                                 'created_at' => $created_at,
                                 'added_by' => Auth::user()->name,
                                 'coordinates'=>$b_geom,
                             );
                             $row_cnt++;
+                        }
+                        forEach( $getValue as $col=>$cname){
+                            if (in_array($col, $this->columnMandatory)){
+                                if (!$cname){
+                                    $validation_res[$col]= isset($validation_res[$col]) ? ++$validation_res[$col] : 1;
+                                }
+
+                            }
+
                         }
                     }
                 }
@@ -293,6 +305,17 @@ class DataLoadUtilities
                 DB::delete('delete from boundaries where boundary_name like \'' . $primary_input_boundary . '%\'');
             DB::table('boundaries')->insert($row_str);
             $boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
+            if ($validation_res){
+                $errmsg = '';
+
+                forEach($validation_res as $key=>$val){
+                    $errmsg .='<b> Mandatory field '.$key. ' missing count : ' .$val.'</b><br/>';
+                }
+                if ($errmsg){
+                    $boundary_msgs['validation_results'] = $errmsg;
+                }
+            }
+
             return array('status' => true, 'msg' => $boundary_msgs);
         } catch (Exception $e) {
             $boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
