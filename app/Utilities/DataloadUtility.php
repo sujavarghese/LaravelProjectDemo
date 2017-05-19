@@ -222,21 +222,21 @@ class DataLoadUtilities
             libxml_use_internal_errors(true);
             $sxe = simplexml_load_file($file);
             if (false === $sxe)
-                return $sxe;
+                return 'KML';
             if (!($sxe->xpath("//Folder"))){
-                return false;
+                return 'Folder';
             }
             if (!($sxe->xpath("//Folder/Placemark/ExtendedData/SchemaData"))){
-                return false;
+                return 'Placemark';
             }
-            if (!($sxe->xpath("//Folder/Placemark/Polygon/outerBoundaryIs/LinearRing/coordinates"))){
-                return false;
+            if (!($sxe->xpath("//Polygon/outerBoundaryIs/LinearRing/coordinates"))){
+                return 'Coordinates';
             }
-            return true;
+            return 'Validated';
         }
         catch (Exception $e) {
 
-            return false;
+            return 'Falied';
         }
 
     }
