@@ -22,6 +22,10 @@ class DataExportController extends Controller
         $this->dataload_utilities = new DataLoadUtilities();
         $this->generic_config = new GenericConfig();
     }
+//    public function ppp()
+//    {
+//        return $this->generic_config->get_column_names();
+//    }
     public function export_mapinfo()
     {
         $data = array();
@@ -81,12 +85,13 @@ class DataExportController extends Controller
                 ->orderBy('boundary_name', 'desc')
                 ->get()->toArray();
 
-            $response = $this->dataload_utilities->generate_kml($queryset);
-            $path_to_file = $this->dataload_utilities->join_path(
-                $this->generic_config->download_path, $code . time() . '.kml'
-            );
-
-            return response('response', $response)->download($path_to_file)->deleteFileAfterSend(true);
+            $response = $this->dataload_utilities->generate_kml();
+            $response['boundary_details'] = $this->dataload_utilities->exclude_columns_from_response(['added_by','created_at'], $queryset);
+            $file_name = $code . '_' . time() . '.kml';
+            $response['file_name'] = $file_name;
+            return response()->view('boundaries.kml', compact('response'))->header(
+                'Content-Type', 'text/xml')->header(
+                'Content-Disposition', 'attachment; filename="' . $file_name . '"');
         }
         return NULL;
     }
