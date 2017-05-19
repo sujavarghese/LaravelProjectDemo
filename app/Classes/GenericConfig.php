@@ -36,6 +36,33 @@ class GenericConfig
         $string = file_get_contents($config_path);
         return json_decode($string, true);
     }
+    public function layer_names()
+    {
+        $layer_name = array();
+        $json_a = $this->boundary_configs;
+
+        forEach ($json_a as $key => $val) {
+            array_push($layer_name, $key);
+        }
+        return$layer_name;
+    }
+    public function get_columns()
+    {
+        $column_names = array();
+        $json_a = $this->boundary_configs;
+        forEach ($json_a as $key => $val)
+        {
+            forEach ($val as $str => $dbArr)
+            {
+                if ($str == 'attributes') {
+                    forEach ($val[$str] as $dbcol => $dbVal) {
+                        array_push($column_names, $dbVal['tblcolumnname']);
+                    }
+                }
+            }
+        }
+        return $column_names;
+    }
     public function get_column_names()
     {
         $layer_name = array();

@@ -26,12 +26,12 @@
                     <span>View Boundaries</span>
                 </a>
             </li>
-            <li class="{!! Request::is('export/kml_export') ? 'active' : '' !!}">
-                <a href="/export/kml_export">
-                    <i class="fa fa-circle-o"></i>
-                    <span>Export Boundary to KML</span>
-                </a>
-            </li>
+            {{--<li class="{!! Request::is('export') ? 'active' : '' !!}">--}}
+                {{--<a href="/export">--}}
+                    {{--<i class="fa fa-circle-o"></i>--}}
+                    {{--<span>Export Boundary to KML</span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
         </ul>
 
     </li>

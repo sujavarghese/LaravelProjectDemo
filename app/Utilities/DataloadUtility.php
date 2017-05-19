@@ -64,7 +64,8 @@ class DataLoadUtilities
     function generate_kml()
     {
         $config = new GenericConfig();
-        $layer_names = array();
+        $layer_names = $config->layer_names();
+
         forEach ($config->boundary_configs as $key => $val){
             $layer_names[] = $key;
         }
@@ -73,7 +74,7 @@ class DataLoadUtilities
 //        }
         $response = array(
             'root_tag_name' => $layer_names[0],
-            'attr_list' => $config->boundary_column_details,
+            'attr_list' => $config->get_columns(),
         );
         return $response;
     }

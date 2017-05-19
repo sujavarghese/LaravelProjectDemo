@@ -22,10 +22,10 @@ class DataExportController extends Controller
         $this->dataload_utilities = new DataLoadUtilities();
         $this->generic_config = new GenericConfig();
     }
-//    public function ppp()
-//    {
-//        return $this->generic_config->get_column_names();
-//    }
+    public function index()
+    {
+        return view('boundaries.boundaryExporter');
+    }
     public function export_mapinfo()
     {
         $data = array();
