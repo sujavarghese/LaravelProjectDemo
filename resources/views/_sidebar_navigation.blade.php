@@ -1,37 +1,57 @@
 <ul class="sidebar-menu">
     <li class="header">Navigation</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="active"><a href="{{ route('home') }}"><span>Dashboard</span></a></li>
+    <li class="{!! Request::is('/') ? 'active' : '' !!}">
+        <a href="{{ route('home') }}">
+            <i class="fa fa-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
     <li>
-        <a href="#"><span>Boundary</span><i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#">
+            <i class="fa fa-square-o"></i>
+            <span>Boundary</span>
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
         <ul class="treeview-menu" role="menu">
-            <li>
+            <li class="{!! Request::is('boundaries/boundary_loader') ? 'active' : '' !!}">
                 <a href="/boundaries/boundary_loader">
-                    Boundary Loader
+                    <i class="fa fa-circle-o"></i>
+                    <span>Boundary Loader</span>
                 </a>
             </li>
-            <li>
+            <li class="{!! Request::is('boundaries/view_boundaries') ? 'active' : '' !!}">
                 <a href="/boundaries/view_boundaries">
-                    View Boundaries
+                    <i class="fa fa-circle-o"></i>
+                    <span>View Boundaries</span>
                 </a>
             </li>
-            <li>
-                <a href="/kml_export">
-                    Export Boundary to KML
+            <li class="{!! Request::is('export/kml_export') ? 'active' : '' !!}">
+                <a href="/export/kml_export">
+                    <i class="fa fa-circle-o"></i>
+                    <span>Export Boundary to KML</span>
                 </a>
             </li>
         </ul>
 
     </li>
-    <li>
-        <a href="/map"><span>Map</span></a>
+    <li class="{!! Request::is('map') ? 'active' : '' !!}">
+        <a href="/map">
+            <i class="fa fa-map-marker"></i>
+            <span>Map</span>
+        </a>
     </li>
-    <li class="active"><a href="{{ route('home') }}"><span>Admin</span></a></li>
-    <li class="active">
+    {{--<li class="{!! Request::is('/') ? 'active' : '' !!}"><a href="{{ route('home') }}">--}}
+            {{--<i class="fa fa-user-plus"></i>--}}
+            {{--<span>Admin</span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
+    <li>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault();
            document.getElementById('logout-form').submit();">
-            Logout
+            <i class="fa fa-sign-out"></i>
+            <span>Logout</span>
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

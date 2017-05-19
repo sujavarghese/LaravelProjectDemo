@@ -7,7 +7,7 @@
         <!-- Sidebar user panel (optional) -->
         {{--@include('_sidebar_userpanel')--}}
         <!-- search form (Optional) -->
-        @include('_sidebar_searchpanel')
+        {{--@include('_sidebar_searchpanel')--}}
         <!-- /.search form -->
 
         <!-- Sidebar Menu -->

@@ -33,10 +33,18 @@ class BoundariesController extends Controller
         $this->generic_config = new GenericConfig();
     }
 
-    public function get_sam_names()
+    /**
+     * Function to get boundary names
+     * @param string $boundary_type: Boundary type argument default is SAM
+     * @return mixed
+     */
+    public function get_sam_names(Request $r)
     {
-        $nj = new DataLoadUtilities();
-        $sam_names = $this->sam_names();
+        $bType = $r->get('boundaryType');
+        if(!$bType) {
+            $bType = 'SAM';
+        }
+        $sam_names = Boundary::where('boundary_type', $bType)->pluck('boundary_name')->toArray();
         $response = array(
             '' => '',
         );
@@ -44,13 +52,14 @@ class BoundariesController extends Controller
         for ($i = 0, $c = count($sam_names); $i < $c; $i += 1) {
             $response[$sam_names[$i]] = $sam_names[$i];
         }
+
         return $response;
     }
 
     public function index()
     {
         $response = array(
-            'sam_names' => $this->get_sam_names(),
+            'sam_names' => $this->dataload_utilities->get_default_sams(),
         );
 
         return view('boundaries.boundaryLoader')->with('response', $response);
@@ -61,14 +70,14 @@ class BoundariesController extends Controller
      * @param $file : Upload file
      * @return bool
      */
-    public function load($file, $primary_input_boundary)
+    public function load($file, $primary_input_boundary, $boundary_msgs)
     {
         $fileType = $this->dataload_utilities->get_file_type($file);
         echo $fileType;
         if ($fileType == 'KML') {
-            return $this->dataload_utilities->read_kml_data($file, $primary_input_boundary);
+            return $this->dataload_utilities->read_kml_data($file, $primary_input_boundary, $boundary_msgs);
         } else {
-            return $this->dataload_utilities->read_csv_data($file, $primary_input_boundary);
+            return $this->dataload_utilities->read_csv_data($file, $primary_input_boundary, $boundary_msgs);
         }
 
     }
@@ -113,10 +122,12 @@ class BoundariesController extends Controller
 
         $this->primary_input_boundary = $bName;
 
-        $load_result = $this->load($file, $this->primary_input_boundary);
-        if (!$load_result)
+        $load_result = $this->load($file, $this->primary_input_boundary, $this->boundary_msgs);
+        $this->boundary_msgs = $load_result['msg'];
+
+        if (!$load_result['status'])
             $this->boundary_msgs['overall_status'] = 'Failed';
-        $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
+            $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
 
 
         Session::put('boundary_msgs', $this->boundary_msgs);
@@ -132,19 +143,17 @@ class BoundariesController extends Controller
         return $this->defined_boundary_type;
     }
 
-    /**
-     * Function to return sam names
-     * @return array of sam names
-     */
-    function sam_names()
-    {
-        $cn = new Constants();
-        return $cn->getSAMNames();
-    }
 
     public function store()
     {
         $data = Boundary::all();
         return view('boundaries.viewBoundaries')->with('data', $data);
+    }
+
+    public function get_coordinates(Request $r){
+        $bName = $r->get('selBoundaryName');
+        $bType = $r->get('selBoundaryType');
+        $coords = DB::table('boundaries')->where('boundary_name', '=', $bName)->where('boundary_type', '=', $bType)->select('coordinates')->limit(1)->get();
+        return $coords;
     }
 }

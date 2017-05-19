@@ -1,25 +1,65 @@
 $(document).ready(function () {
 
-    // Initializing map properties
-    var raster = new ol.layer.Tile({
-        source: new ol.source.OSM()
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
-    var source = new ol.source.Vector({wrapX: false});
 
-    var vector = new ol.layer.Vector({
-        source: source
+    var feature = new ol.Feature({
     });
 
-    var map = new ol.Map({
-        layers: [raster, vector],
-        target: 'map',
-        view: new ol.View({
-            center: ol.proj.fromLonLat([131.070325, -23.826219]),
-            zoom: 4
+    var style = new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: 'rgba(255, 255, 255, 0.6)'
+        }),
+        stroke: new ol.style.Stroke({
+            color: '#319FD3',
+            width: 1
+        }),
+        image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 255, 255, 0.6)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#319FD3',
+                width: 1
+            })
         })
     });
-    // Initializing map properties ends here
+
+    var source = new ol.source.Vector({
+        features: [feature]
+    });
+
+    var vectorLayer = new ol.layer.Vector({
+        source: source,
+        style: style
+    });
+
+    var view = new ol.View({
+        center: [0, 0],
+        zoom: 1
+    });
+    var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            vectorLayer
+        ],
+        target: 'map',
+        controls: ol.control.defaults({
+            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+                collapsible: false
+            })
+        }),
+        view: view
+    });
+
+
 
     var typeSelect = document.getElementById('geometryType');
 
@@ -69,6 +109,26 @@ $(document).ready(function () {
         $('.boundary-loading').addClass('display-none');
     }
 
+    /**
+     * Function to add a new feature
+     */
+    function addFeature(coordinates) {
+        source.clear();
+        var polyCoords = [];
+        var coords = coordinates.split(' ');
+        for (var i in coords) {
+            var c = coords[i].split(',');
+            polyCoords.push(ol.proj.transform([parseFloat(c[1]), parseFloat(c[0])], 'EPSG:4326', 'EPSG:3857'));
+        }
+
+        var feature = new ol.Feature({
+            geometry: new ol.geom.Polygon([polyCoords])
+        });
+        source.addFeature( feature );
+        var polygon = (feature.getGeometry());
+        view.fit(polygon, {padding: [170, 50, 30, 150]});
+    }
+
 
     /**
      * Handle change event for boundary type select.
@@ -78,9 +138,13 @@ $(document).ready(function () {
         if(bType) {
             $('.boundary-loading').removeClass('display-none');
             $.ajax({
-                url: '',
+                url: '/boundaries/get_sam_names',
                 data: {boundaryType: bType},
-                success: function () {
+                success: function (data) {
+                    $('#boundaryCode').empty();
+                    $.each(data, function(i, value) {
+                        $('#boundaryCode').append($('<option>').text(value).attr('value', value));
+                    });
                     resetInputs();
                 },
                 error: function () {
@@ -92,13 +156,28 @@ $(document).ready(function () {
         }
     });
 
+
     /**
      * Handle change event for boundary code select.
      */
     $('#boundaryCode').change(function () {
         var bCode = $(this).val();
         if(bCode) {
-            $('.goemetry-type-selection').removeClass('display-none');
+            $.ajax({
+                url: '/boundaries/get_coordinates',
+                method:'POST',
+                data: {selBoundaryName: bCode, selBoundaryType: $('#boundaryType').val()},
+                success: function (data) {
+                    if(data && data[0]) {
+                        addFeature(data[0].coordinates);
+                    } else  {
+                        source.clear();
+                    }
+                },
+                error: function () {
+                    resetInputs();
+                }
+            });
         }
 
     });
@@ -111,6 +190,7 @@ $(document).ready(function () {
         var form = $( this ).serialize();
         $.ajax({
             url: '',
+            method:'POST',
             data: {params: form},
             success: function () {
                 resetInputs();

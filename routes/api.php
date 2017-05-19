@@ -17,6 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('boundary/sam_names', 'BoundariesController@get_sam_names');
+Route::get('boundaries/sam_names', 'BoundariesController@get_sam_names');
 
-Route::get('boundary/sam_types', 'BoundariesController@get_boundary_types');
+Route::get('boundaries/sam_types', 'BoundariesController@get_boundary_types');

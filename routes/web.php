@@ -26,6 +26,10 @@ Route::get('boundaries/view_boundaries', 'BoundariesController@store');
 
 Route::post('boundaries/upload', 'BoundariesController@create');
 
+Route::post('boundaries/get_coordinates', 'BoundariesController@get_coordinates');
+
+Route::get('boundaries/get_sam_names', 'BoundariesController@get_sam_names');
+
 Route::resource('boundaries', 'BoundariesController');
 
 Route::get('export/export_mapinfo', 'DataExportController@export_mapinfo');
@@ -33,7 +37,6 @@ Route::get('export/export_mapinfo', 'DataExportController@export_mapinfo');
 Route::get('export/kml/{code}', 'DataExportController@export_kml');
 
 Route::get('export/convert_kml_to_mapinfo', 'DataExportController@convert_kml_to_mapinfo');
-
 
 Route::get('/mapinfo_validator', function () {
     return view('mapinfoValidator');

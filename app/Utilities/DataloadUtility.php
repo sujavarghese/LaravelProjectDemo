@@ -19,6 +19,30 @@ class DataLoadUtilities
 {
 
     /**
+     * Function to return sam names
+     * @return array of sam names
+     */
+    function sam_names()
+    {
+        $cn = new Constants();
+        return $cn->getSAMNames();
+    }
+
+
+    public function get_default_sams(){
+        $sam_names = $this->sam_names();
+        $response = array(
+            '' => '',
+        );
+
+        for ($i = 0, $c = count($sam_names); $i < $c; $i += 1) {
+            $response[$sam_names[$i]] = $sam_names[$i];
+        }
+        return $response;
+
+    }
+
+    /**
      * Function to get input file type
      * @param $file : Input file
      * @return string
@@ -83,7 +107,7 @@ class DataLoadUtilities
      * @param $file : Uploaded file
      * @return bool
      */
-    public function read_csv_data($file, $primary_input_boundary)
+    public function read_csv_data($file, $primary_input_boundary, $boundary_msgs)
     {
 
         try {
@@ -104,12 +128,13 @@ class DataLoadUtilities
                 DB::delete('delete from boundaries where boundary_name like \'' . primary_input_boundary . '%\'');
             DB::insert('insert into boundaries (boundary_name, boundary_type, created_at, added_by) 
                           values ' . rtrim($row_str, ","));
-            $this->boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
+            $boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
             fclose($file);
-            return true;
+            return array('status' => true, 'msg' => $boundary_msgs);
+
         } catch (Exception $e) {
-            $this->boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
-            return false;
+            $boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
+            return array('status' => false, 'msg' => $boundary_msgs);
         }
 
     }
@@ -210,7 +235,7 @@ class DataLoadUtilities
 
     }
 
-    public function read_kml_data($file, $primary_input_boundary)
+    public function read_kml_data($file, $primary_input_boundary, $boundary_msgs)
     {
 
         try {
@@ -260,11 +285,11 @@ class DataLoadUtilities
             if ($row_str)
                 DB::delete('delete from boundaries where boundary_name like \'' . $primary_input_boundary . '%\'');
             DB::table('boundaries')->insert($row_str);
-            $this->boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
-            return true;
+            $boundary_msgs['insertion_success_msg'] = '<b>' . $row_cnt . '</b> boundary rows are inserted to database';
+            return array('status' => true, 'msg' => $boundary_msgs);
         } catch (Exception $e) {
-            $this->boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
-            return false;
+            $boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
+            return array('status' => false, 'msg' => $boundary_msgs);
         }
 
     }
