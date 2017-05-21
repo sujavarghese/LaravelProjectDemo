@@ -45,13 +45,42 @@ class HomeController extends Controller
     }
     public function get_user_activity_log()
     {
-        return UsersLog::all();
+        $log_table = UsersLog::all();
+        $valid_upload_count = 0;
+        $valid_validate_count = 0;
+        $valid_load_count = 0;
+        foreach ($log_table as $log_obj) {
+            if ($log_obj['upload_status'] == "PASS") {
+                $valid_upload_count = $valid_upload_count + 1;
+            }
+            if ($log_obj['validation_status'] == "VALIDATED") {
+                $valid_validate_count = $valid_validate_count + 1;
+            }
+            if ($log_obj['load_status'] == "PASS") {
+                $valid_load_count = $valid_load_count + 1;
+            }
+        }
+        return array(
+            array(
+                "value"=> $valid_upload_count,
+                "color"=> "gray"
+            ),
+            array(
+                "value"=> $valid_validate_count,
+                "color"=> "blue"
+            ),
+            array(
+                "value"=> $valid_load_count,
+                "color"=> "aqua"
+            ),
+        );
     }
     public function get_dashboard_details()
     {
         $this->dashboard_data['user_count'] = $this->get_users();
         $this->dashboard_data['ada_count'] = $this->get_ada_count();
         $this->dashboard_data['sam_count'] = $this->get_sam_count();
+        $this->dashboard_data['load_stat'] = $this->get_user_activity_log();
     }
 
     public function index()
