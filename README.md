@@ -20,14 +20,14 @@ This is an application for Network Boundary Design Exchange built on Laravel PHP
 ## What's coming next
 
 
-Incorporate ReactJS, Maps, KML into the application.
+Incorporate Maps, KML, Graphs into the application.
 
 * Dashboard
     - Display user activities with graphical representation
 * Boundary Loader tool
     - Support KML file type
 * Boundary Exporter
-    - Support file types viz., KML, MapInfo
+    - Support file types viz., KML
 * Map Viewer
     - View uploaded data in the map and export selected boundary
 * Search

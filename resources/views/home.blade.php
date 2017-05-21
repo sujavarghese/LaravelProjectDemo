@@ -110,9 +110,9 @@
                                     <!-- /.col -->
                                     <div class="col-md-4">
                                         <ul class="chart-legend clearfix">
-                                            <li><i class="fa fa-circle-o text-gray"></i> Uploaded</li>
-                                            <li><i class="fa fa-circle-o text-blue"></i> Validated</li>
-                                            <li><i class="fa fa-circle-o text-aqua"></i> Loaded</li>
+                                            <li><i class="fa fa-circle-o text-gray"></i> Successfully Uploaded</li>
+                                            <li><i class="fa fa-circle-o text-blue"></i> Validation Passed</li>
+                                            <li><i class="fa fa-circle-o text-aqua"></i> Successfully Loaded</li>
                                         </ul>
                                     </div>
                                     <!-- /.col -->
