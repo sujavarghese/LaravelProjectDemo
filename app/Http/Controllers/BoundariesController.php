@@ -176,4 +176,8 @@ class BoundariesController extends Controller
         $coords = DB::table('boundaries')->where('boundary_name', '=', $bName)->where('boundary_type', '=', $bType)->select('coordinates')->limit(1)->get();
         return $coords;
     }
+    public function download_kml_sample() {
+        $kml_sample_path = $this->generic_config->download_path . DIRECTORY_SEPARATOR . "nbn_boundary_kml_structure.xml";
+        return response()->download($kml_sample_path);
+    }
 }
