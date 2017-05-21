@@ -72,6 +72,17 @@ You can find a sample input file under `tests\TestData`
 
 ## Changelog
 
+1.0 Dashboard Enhancements
+
+0.9 UI enhancements
+
+0.8 User activity log
+
+0.7 KML Export
+
+0.6 Map Integration
+
+0.5 Added KML Validation
 
 0.4 UI enhancements
 
