@@ -22,7 +22,6 @@ class CreateBoundaryLayersTable extends Migration
             $table->timestamp('created_at');
             $table->LONGTEXT('coordinates');
             $table->unsignedInteger('job_code');
-//            $table->foreign('job_code')->references('id')->on('boundaries')->onDelete('cascade');
         });
 
     }

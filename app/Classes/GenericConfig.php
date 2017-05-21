@@ -73,17 +73,14 @@ class GenericConfig
 
         forEach ($json_a as $key => $val)
         {
-            array_push($layer_name, $key);
 
+            array_push($layer_name, $key);
             forEach ($val as $str => $dbArr)
             {
+
                 if ($str == 'attributes')
-                    forEach ($val[$str] as $dbcol => $dbVal)
-                    {
-                        array_push($tableName,$dbVal);
-                        array_push($column_names, $dbVal['tblcolumnname']);
-                    }
-                    $attribute =  array($key => $tableName);
+                    $attribute =  array($key =>$val['attributes']);
+
             }
         }
         return $attribute;

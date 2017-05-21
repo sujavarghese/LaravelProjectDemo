@@ -209,11 +209,13 @@ class DataLoadUtilities
     public function get_layer_name($details){
         forEach($details as $layer=>$name) {
             array_push($this->layerName,$layer);
-            forEach ($name as $dbVal) {
-                array_push($this->tableColumnName,$dbVal['tblcolumnname']);
-                if ($dbVal['mandatory'])
-                    array_push($this->columnMandatory,$dbVal['tblcolumnname']);
+            forEach ($name as $cfVal =>$dbVal) {
+                if ($dbVal['mandatory']) {
+                    array_push($this->columnMandatory, $cfVal);
+                }
+                array_push($this->tableColumnName, $cfVal);
             }
+
         }
         return true;
     }
