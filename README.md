@@ -6,7 +6,7 @@
 This is an application for Network Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. 
 
 
-## What's done
+## Release 0.0
 
 
 * User Authentication
@@ -17,17 +17,19 @@ This is an application for Network Boundary Design Exchange built on Laravel PHP
     - Boundary details tab view
 
 
-## What's coming next
+## Release 1.0
 
 
-Incorporate Maps, KML, Graphs into the application.
+Incorporated Maps, KML, Graphs into the application.
 
 * Dashboard
-    - Display user activities with graphical representation
+    - Display user activities with graphical representation.
 * Boundary Loader tool
     - Support KML file type
+* KML Structure Validation
+    - Validate KML structure and report errors, if any.
 * Boundary Exporter
-    - Support file types viz., KML
+    - Support file type KML
 * Map Viewer
     - View uploaded data in the map and export selected boundary
 * Search
