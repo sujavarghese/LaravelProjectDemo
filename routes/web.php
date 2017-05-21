@@ -40,9 +40,7 @@ Route::get('/export/kml/{type}/{code}', 'DataExportController@export_kml');
 
 Route::get('/export/convert_kml_to_mapinfo', 'DataExportController@convert_kml_to_mapinfo');
 
-Route::get('/mapinfo_validator', function () {
-    return view('mapinfoValidator');
-});
+Route::get('/user_activity_log', 'HomeController@get_user_activity_log');
 
 Route::get('/kml_sample_template', 'BoundariesController@download_kml_sample');
 
