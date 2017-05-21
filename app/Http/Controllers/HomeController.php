@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Boundary;
 use App\User;
+use App\UsersLog;
 
 
 class HomeController extends Controller
@@ -41,6 +42,10 @@ class HomeController extends Controller
     public function get_sam_count()
     {
         return Boundary::where('boundary_type', '=', 'SAM')->count();
+    }
+    public function get_user_activity_log()
+    {
+        return UsersLog::all();
     }
     public function get_dashboard_details()
     {
