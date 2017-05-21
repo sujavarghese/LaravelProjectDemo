@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li class="{!! Request::is('boundaries/view_boundaries') ? 'active' : '' !!}">
-                <a href="/boundaries/view_boundaries">
+                <a href="/boundaries/view_boundaries/">
                     <i class="fa fa-circle-o"></i>
                     <span>View Boundaries</span>
                 </a>

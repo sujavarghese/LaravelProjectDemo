@@ -18,6 +18,7 @@ use Redirect;
 use Session;
 use Auth;
 use DateTime;
+use DateTimeZone;
 
 class BoundariesController extends Controller
 {
@@ -101,7 +102,7 @@ class BoundariesController extends Controller
                 'selBoundaryName' => 'Boundary Name',
             ]
         );
-        $created_at = new DateTime();
+        $created_at = new DateTime('now', new DateTimeZone('AUSTRALIA/MELBOURNE'));
         $file_validation = $this->dataload_utilities->validate_file_extension(Input::file('boundaryCsvFile'));
         $structure_validation = $this->dataload_utilities->validate_kml(Input::file('boundaryCsvFile'));
         //check if file is kml
@@ -141,11 +142,13 @@ class BoundariesController extends Controller
         $this->primary_input_boundary = $bName;
 
         $load_result = $this->load($file, $this->primary_input_boundary, $this->boundary_msgs,$details);
+
         $this->boundary_msgs = $load_result['msg'];
 
         if ($load_result['status'] == 'PASS') {
             $this->boundary_msgs['overall_status'] = 'Pass';
             $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
+            $this->boundary_msgs['job_code'] = $details->id;
         }
         $this->dataload_utilities->update_user_log($details->id,'load_status',$load_result['status']);
 
@@ -164,9 +167,14 @@ class BoundariesController extends Controller
     }
 
 
-    public function store()
+    public function store(Request $r)
     {
-        $data = Boundary::all();
+        $id = $r->get('id');
+        if ($id){
+            $data = DB::table('boundaries')->where('job_code', '=', $id)->get();
+        }
+        else
+            $data = Boundary::all();
         return view('boundaries.viewBoundaries')->with('data', $data);
     }
 

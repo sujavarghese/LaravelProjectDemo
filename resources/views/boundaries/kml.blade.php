@@ -1,7 +1,7 @@
 <?php
 //
 ?>
-<kml xmlns="http://www.opengis.net/kml/2.2">
+<kml>
     <Document id="root_doc">
         <Schema name="{{$response['root_tag_name']}}" id="{{$response['root_tag_name']}}">
             <?php for ($i = 0; $i < count($response['attr_list']); $i++){ ?>

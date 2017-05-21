@@ -35,6 +35,7 @@
                                             <table id="view_boundary_data_table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="view_boundary_data_table_info">
                                                 <thead>
                                                     <tr role="row">
+                                                        <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 167px;" aria-label="Rendering engine: activate to sort column ascending">Job Code</th>
                                                         <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 167px;" aria-label="Rendering engine: activate to sort column ascending">Boundary Type</th>
                                                         <th class="sorting_desc" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 207px;" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Boundary Name</th>
                                                         <th class="sorting" tabindex="0" aria-controls="view_boundary_data_table" rowspan="1" colspan="1" style="width: 183px;" aria-label="Platform(s): activate to sort column ascending">Added By</th>
@@ -46,6 +47,7 @@
                                                 <tbody>
                                                 @foreach($data as $row)
                                                     <tr role="row" class="even">
+                                                        <td class="">{!! $row->job_code !!}</td>
                                                         <td class="">{!! $row->boundary_type !!}</td>
                                                         <td class="">{!! $row->boundary_name  !!}</td>
                                                         <td class="">{!! $row->added_by !!}</td>
@@ -59,6 +61,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                 <tr>
+                                                    <th rowspan="1" colspan="1">Job Code</th>
                                                     <th rowspan="1" colspan="1">Boundary Type</th>
                                                     <th rowspan="1" colspan="1">Boundary Name</th>
                                                     <th rowspan="1" colspan="1">Added By</th>

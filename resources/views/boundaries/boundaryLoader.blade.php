@@ -139,7 +139,7 @@
                                     <label class="control-label">
                                         <i class="fa fa-check"></i> Passed
                                     </label>
-                                    <br><a href="/boundaries/view_boundaries" class="btn btn-primary btn-xs">Click Here</a> to be view loaded boundaries.
+                                    <br><a href="/boundaries/view_boundaries/?id={!! Session::get('boundary_msgs.job_code') !!}" class="btn btn-primary btn-xs">Click Here</a> to be view loaded boundaries.
                                 </div>
                             @endif
                             @if(Session::get('boundary_msgs.overall_status') == 'Failed')

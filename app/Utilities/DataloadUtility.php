@@ -10,6 +10,7 @@ use Redirect;
 use Session;
 use Auth;
 use DateTime;
+use DateTimeZone;
 
 use GenericConfig;
 use Constants;
@@ -252,7 +253,7 @@ class DataLoadUtilities
             $this->get_layer_name($config->boundary_column_details);
             $xml = simplexml_load_file($file);
             $folder = $xml->Document->Folder;
-            $created_at = new DateTime();
+            $created_at = new DateTime('now', new DateTimeZone('AUSTRALIA/MELBOURNE'));
             $row_str = array();
             $validation_res = array();
             $row_cnt = 0;
