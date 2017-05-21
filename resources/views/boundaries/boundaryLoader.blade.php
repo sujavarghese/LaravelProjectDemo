@@ -28,6 +28,9 @@
                         <!-- form-start -->
                         <div>
                             <h6 class="box-title">This tools allows user to Boundary data loader in a specified KML format</h6>
+                            <div class="box-body">
+                                <a href="/kml_sample_template" class="btn btn-default pull-right">Download KML Sample</a>
+                            </div>
                             {{--TODO: Provide details about CSV format--}}
                             {!! Form::open(
                                 array(

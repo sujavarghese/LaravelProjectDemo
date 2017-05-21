@@ -44,9 +44,7 @@ Route::get('/mapinfo_validator', function () {
     return view('mapinfoValidator');
 });
 
-Route::get('/new_menu', function () {
-    return view('newHome');
-});
+Route::get('/kml_sample_template', 'BoundariesController@download_kml_sample');
 
 Route::get('/map', 'MapController@index');
 
