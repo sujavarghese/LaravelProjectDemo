@@ -70,12 +70,11 @@ class BoundariesController extends Controller
      * @param $file : Upload file
      * @return bool
      */
-    public function load($file, $primary_input_boundary, $boundary_msgs)
+    public function load($file, $primary_input_boundary, $boundary_msgs, $detail)
     {
         $fileType = $this->dataload_utilities->get_file_type($file);
-        echo $fileType;
         if ($fileType == 'KML') {
-            return $this->dataload_utilities->read_kml_data($file, $primary_input_boundary, $boundary_msgs);
+            return $this->dataload_utilities->read_kml_data($file, $primary_input_boundary, $boundary_msgs, $detail);
         } else {
             return $this->dataload_utilities->read_csv_data($file, $primary_input_boundary, $boundary_msgs);
         }
@@ -102,9 +101,21 @@ class BoundariesController extends Controller
                 'selBoundaryName' => 'Boundary Name',
             ]
         );
+        $created_at = new DateTime();
         $file_validation = $this->dataload_utilities->validate_file_extension(Input::file('boundaryCsvFile'));
         $structure_validation = $this->dataload_utilities->validate_kml(Input::file('boundaryCsvFile'));
         //check if file is kml
+        $this->boundary_msgs['overall_status'] = '&nbsp;&nbsp;&nbsp;<br/><b> Pass </b>';
+        $file = Input::file('boundaryCsvFile');
+        $bType = $r->get('selBoundaryType');
+        $bName = $r->get('selBoundaryName');
+        DB::table('users_log')->insert(
+            ['boundary_code' => $bName, 'boundary_type' => $bType,
+                'created_at' => $created_at, 'upload_status' => 'PASS',
+                'validation_status' => 'VALIDATED', 'load_status'=>'', 'user'=> Auth::user()->name,
+                'count'=>0,'validation_result'=>'']
+        );
+        $details = $this->dataload_utilities->get_db_details();
         if (!$file_validation || $structure_validation !== 'Validated') {
 
             $error = array();
@@ -117,6 +128,7 @@ class BoundariesController extends Controller
                 else {
                     $error[] = "Invalid structure for tag " .$structure_validation."";
                 }
+                $this->dataload_utilities->update_user_log($details->id,'validation_status','FAILED');
 
             $validator = $error;
             return Redirect::to('boundaries/boundary_loader')->withErrors($validator);
@@ -128,12 +140,14 @@ class BoundariesController extends Controller
 
         $this->primary_input_boundary = $bName;
 
-        $load_result = $this->load($file, $this->primary_input_boundary, $this->boundary_msgs);
+        $load_result = $this->load($file, $this->primary_input_boundary, $this->boundary_msgs,$details);
         $this->boundary_msgs = $load_result['msg'];
 
-        if (!$load_result['status'])
-            $this->boundary_msgs['overall_status'] = '<b> Pass </b>';
+        if ($load_result['status'] == 'PASS') {
+            $this->boundary_msgs['overall_status'] = 'Pass';
             $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
+        }
+        $this->dataload_utilities->update_user_log($details->id,'load_status',$load_result['status']);
 
 
         Session::put('boundary_msgs', $this->boundary_msgs);

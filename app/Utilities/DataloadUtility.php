@@ -242,7 +242,7 @@ class DataLoadUtilities
 
     }
 
-    public function read_kml_data($file, $primary_input_boundary, $boundary_msgs)
+    public function read_kml_data($file, $primary_input_boundary, $boundary_msgs, $record)
     {
 
         try {
@@ -280,18 +280,17 @@ class DataLoadUtilities
                             }
                         }
                         if (isset($getValue['type']) && isset($getValue['code']) &&$b_geom){
-
                             $row_str[$row_cnt] = array(
                                 'boundary_type' => $getValue['type'],
                                 'boundary_name' => $getValue['code'],
                                 'created_at' => $created_at,
                                 'added_by' => Auth::user()->name,
                                 'coordinates'=>$b_geom,
+                                'job_code'=> $record->id,
                             );
                             $row_cnt++;
                         }
                         forEach( $getValue as $col=>$cname){
-                            if ( !isset($array[$key]) || $array[$key] == "" || is_null($array[$key]) )
                             if (in_array($col, $this->columnMandatory)){
                                 if (!$cname){
                                     $validation_res[$col]= isset($validation_res[$col]) ? ++$validation_res[$col] : 1;
@@ -308,6 +307,7 @@ class DataLoadUtilities
             if ($row_str)
                 DB::delete('delete from boundaries where boundary_name like \'' . $primary_input_boundary . '%\'');
             DB::table('boundaries')->insert($row_str);
+            $this->update_user_log($record->id,'count',$row_cnt);
             $boundary_msgs['insertion_success_msg'] = '&nbsp;&nbsp;&nbsp;<br/><b>' . $row_cnt . '</b> boundary rows are inserted to database';
             if ($validation_res){
                 $errmsg = '';
@@ -320,12 +320,22 @@ class DataLoadUtilities
                 }
             }
 
-            return array('status' => true, 'msg' => $boundary_msgs);
+            return array('status' => 'PASS', 'msg' => $boundary_msgs);
         } catch (Exception $e) {
             $boundary_msgs['read_csv_data_e'] = 'Failed due to Exception' . $e->getMessage();
-            return array('status' => false, 'msg' => $boundary_msgs);
+            return array('status' => 'FAIL', 'msg' => $boundary_msgs);
         }
 
+    }
+
+    public function update_user_log($id,$col,$status){
+        DB::table('users_log')
+            ->where('id', $id)
+            ->update([$col => $status]);
+    }
+
+    public function get_db_details(){
+        return DB::table('users_log')->orderBy('created_at', 'desc')->first();
     }
 
 }
