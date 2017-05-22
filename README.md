@@ -68,9 +68,7 @@ Incorporated Maps, KML, Graphs into the application.
     2.8 Open browser and redirect to http://127.0.0.1:8000 [where the demo is running]
 
     2.9 Click on register link and create an User
-    
-    
-You can find a sample input file under `tests\TestData`
+
 
 ## Changelog
 
