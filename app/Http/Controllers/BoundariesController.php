@@ -178,13 +178,20 @@ class BoundariesController extends Controller
             $data = Boundary::all();
         return view('boundaries.viewBoundaries')->with('data', $data);
     }
-
+    /**
+     * Function to return boundary co-ordinates for the selected boundary
+     * @return array
+     */
     public function get_coordinates(Request $r){
         $bName = $r->get('selBoundaryName');
         $bType = $r->get('selBoundaryType');
         $coords = DB::table('boundaries')->where('boundary_name', '=', $bName)->where('boundary_type', '=', $bType)->select('coordinates')->limit(1)->get();
         return $coords;
     }
+    /**
+     * Function to download a sample KML template
+     * @return array
+     */
     public function download_kml_sample() {
         $kml_sample_path = $this->generic_config->download_path . DIRECTORY_SEPARATOR . "nbn_boundary_kml_structure.kml";
         return response()->download($kml_sample_path);

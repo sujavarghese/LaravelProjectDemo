@@ -138,7 +138,7 @@
                                         <!-- /.box-body -->
                                         <div class="box-footer clearfix">
                                             <a href="/boundaries/view_boundaries/"
-                                               class="btn btn-sm btn-default btn-flat pull-right">View All Uploads</a>
+                                               class="btn btn-sm btn-default btn-flat pull-right">View All Boundaries</a>
                                         </div>
                                         <!-- /.box-footer -->
                                     </div>

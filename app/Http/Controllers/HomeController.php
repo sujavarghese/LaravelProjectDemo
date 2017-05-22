@@ -31,23 +31,43 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    /**
+     * Function to return count of all users
+     * @return array
+     */
     public function get_users()
     {
         return User::count();
     }
+    /**
+     * Function to return count of ADA boundaries uploaded into Database.
+     * @return array
+     */
     public function get_ada_count()
     {
         return Boundary::where('boundary_type', '=', 'ADA')->count();
     }
+    /**
+     * Function to return count of SAM boundaries uploaded into Database.
+     * @return array
+     */
     public function get_sam_count()
     {
         return Boundary::where('boundary_type', '=', 'SAM')->count();
 
     }
+    /**
+     * Function to return 5 boundaries which are recently uploaded into Database.
+     * @return array
+     */
     public function get_recent_uploads()
     {
         return UsersLog::limit(5)->orderBy('created_at', 'DESC')->get();
     }
+    /**
+     * Function to return user activity log details.
+     * @return array
+     */
     public function get_user_activity_log()
     {
         $log_table = UsersLog::all();
@@ -80,6 +100,10 @@ class HomeController extends Controller
             ),
         );
     }
+    /**
+     * Function to return dashboard details
+     * @return array
+     */
     public function get_dashboard_details()
     {
         $this->dashboard_data['user_count'] = $this->get_users();

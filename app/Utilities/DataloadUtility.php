@@ -17,18 +17,23 @@ use Constants;
 
 class DataLoadUtilities
 {
+    public $layerName = array();
+    public $tableColumnName = array();
+    public $columnMandatory = array();
 
     /**
      * Function to return sam names
-     * @return array of sam names
+     * @return array(linear) of sam names
      */
     function sam_names()
     {
         $cn = new Constants();
         return $cn->getSAMNames();
     }
-
-
+    /**
+     * Function to return all sam names
+     * @return array(assoc) of sam names
+     */
     public function get_default_sams(){
         $sam_names = $this->sam_names();
         $response = array(
@@ -47,21 +52,24 @@ class DataLoadUtilities
      * @param $file : Input file
      * @return string
      */
-    public $layerName = array();
-    public $tableColumnName = array();
-    public $columnMandatory = array();
-
-
     public function get_file_type($file)
     {
         $fileType = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
         return strtoupper($fileType);
     }
-
+    /**
+     * Function to join two path
+     * @param $file : Path, Input file path to append
+     * @return string
+     */
     public function join_path($path, $file)
     {
         return $path . DIRECTORY_SEPARATOR . $file;
     }
+    /**
+     * Function to return response into KML template
+     * @return array
+     */
     function generate_kml()
     {
         $config = new GenericConfig();
@@ -79,6 +87,10 @@ class DataLoadUtilities
         );
         return $response;
     }
+    /**
+     * Function to exclude columns from exporting KML template
+     * @return array
+     */
     public static function exclude_columns_from_response($column_names, $results) {
         $response = array();
         foreach ($results as $index => $result) {
@@ -220,7 +232,10 @@ class DataLoadUtilities
         }
         return true;
     }
-
+    /**
+     * Function to validate KML input file
+     * @return string
+     */
     public function validate_kml($file){
         try {
             libxml_use_internal_errors(true);
@@ -244,7 +259,10 @@ class DataLoadUtilities
         }
 
     }
-
+    /**
+     * Function to parse KML input file
+     * @return array
+     */
     public function read_kml_data($file, $primary_input_boundary, $boundary_msgs, $record)
     {
 
