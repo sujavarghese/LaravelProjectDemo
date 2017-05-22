@@ -27,6 +27,7 @@
                         <option value="FSA">FSA</option>
                         <option value="SAM">SAM</option>
                         <option value="ADA">ADA</option>
+                        <option value="TLS_INT">TLS_INT</option>
                     </select>
                     <div class="boundary-loading-wrapper">
                         <i class="fa fa-refresh fa-spin boundary-loading display-none"></i>
