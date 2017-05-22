@@ -147,8 +147,9 @@ class BoundariesController extends Controller
 
         if ($load_result['status'] == 'PASS') {
             $this->boundary_msgs['overall_status'] = 'Pass';
-            $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
             $this->boundary_msgs['job_code'] = $details->id;
+        } else {
+            $this->boundary_msgs['overall_status_reason'] = 'during data insertion';
         }
         $this->dataload_utilities->update_user_log($details->id,'load_status',$load_result['status']);
 
@@ -185,7 +186,7 @@ class BoundariesController extends Controller
         return $coords;
     }
     public function download_kml_sample() {
-        $kml_sample_path = $this->generic_config->download_path . DIRECTORY_SEPARATOR . "nbn_boundary_kml_structure.xml";
+        $kml_sample_path = $this->generic_config->download_path . DIRECTORY_SEPARATOR . "nbn_boundary_kml_structure.kml";
         return response()->download($kml_sample_path);
     }
 }

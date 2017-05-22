@@ -42,6 +42,11 @@ class HomeController extends Controller
     public function get_sam_count()
     {
         return Boundary::where('boundary_type', '=', 'SAM')->count();
+
+    }
+    public function get_recent_uploads()
+    {
+        return UsersLog::limit(5)->orderBy('created_at', 'DESC')->get();
     }
     public function get_user_activity_log()
     {
@@ -81,6 +86,7 @@ class HomeController extends Controller
         $this->dashboard_data['ada_count'] = $this->get_ada_count();
         $this->dashboard_data['sam_count'] = $this->get_sam_count();
         $this->dashboard_data['load_stat'] = $this->get_user_activity_log();
+        $this->dashboard_data['recent_uploads'] = $this->get_recent_uploads();
     }
 
     public function index()
