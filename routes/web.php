@@ -32,8 +32,6 @@ Route::get('/boundaries/get_sam_names', 'BoundariesController@get_sam_names');
 
 Route::resource('/boundaries', 'BoundariesController');
 
-Route::get('/export/mapinfo', 'DataExportController@export_mapinfo');
-
 Route::get('/export', 'DataExportController@index');
 
 Route::get('/export/kml/{type}/{code}', 'DataExportController@export_kml');
