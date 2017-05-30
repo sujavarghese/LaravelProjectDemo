@@ -57,8 +57,9 @@ $(document).ready(function () {
     });
 
     var view = new ol.View({
-        center: [0, 0],
-        zoom: 1
+        // Set default view focusing Australia
+        center: ol.proj.transform([134.960577, -25.824145], 'EPSG:4326', 'EPSG:3857'),
+        zoom: 5
     });
     var map = new ol.Map({
         layers: [

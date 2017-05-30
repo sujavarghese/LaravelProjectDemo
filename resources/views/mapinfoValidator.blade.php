@@ -11,7 +11,7 @@
 
 <section class="content-header">
     <h1>
-        {{ $page_title or 'Design Exchange MapInfo Validator'}}
+        {{ $page_title or 'Boundary Exchange MapInfo Validator'}}
         <small>{{ $page_description or 'Validate MapInfo designs' }}</small>
     </h1>
     <!-- You can dynamically generate breadcrumbs here -->

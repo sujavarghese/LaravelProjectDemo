@@ -11,8 +11,8 @@
 
     <section class="content-header">
         <h1>
-            {{ $page_title or 'Boundary & Design Exchange Dashboard'}}
-            <small>{{ $page_description or 'Overall summary of Boundary & Design Exchange portal' }}</small>
+            {{ $page_title or 'Boundary Exchange Dashboard'}}
+            <small>{{ $page_description or 'Overall summary of Boundary Exchange portal' }}</small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
     </section>

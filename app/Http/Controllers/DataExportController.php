@@ -22,6 +22,7 @@ class DataExportController extends Controller
     {
         $this->dataload_utilities = new DataLoadUtilities();
         $this->generic_config = new GenericConfig();
+        parent::__construct();
     }
     public function index()
     {

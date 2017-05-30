@@ -67,6 +67,7 @@
                                                     <th rowspan="1" colspan="1">Added By</th>
                                                     <th rowspan="1" colspan="1">When</th>
                                                     <th rowspan="1" colspan="1">View in Map</th>
+                                                    <th rowspan="1" colspan="1">Export KML</th>
                                                 </tr>
                                                 </tfoot>
                                             </table>

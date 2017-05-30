@@ -18,12 +18,13 @@
 
 <section class="content">
     <div class="container width100">
-        <div class="row select-boundary-wrapper">
+        <div id="map" class="map">
+        <div class="row select-boundary-wrapper floating-dropdown">
             <form action="" id="exportBoundary">
                 <label class="col-sm-3 align-label">Select Boundary:</label>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <select class="form-control" id="boundaryType" name="boundaryType" required>
-                        <option value="" selected="selected">Select Boundary Type</option>
+                        <option value="" selected="selected">Boundary Type</option>
                         <option value="FSA">FSA</option>
                         <option value="SAM">SAM</option>
                         <option value="ADA">ADA</option>
@@ -34,16 +35,17 @@
                     </div>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <select class="form-control" id="boundaryCode" name="boundaryCode" required disabled="disabled">
-                        <option value="">Select Boundary Code</option>
+                        <option value="">Boundary Code</option>
                     </select>
                     {{--TODO extract boundary name from database --}}
 
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-1">
                     <a id="submit" class="btn btn-primary ">Export</a>
                 </div>
+        </div>
         </div>
         <div class="row goemetry-type-selection display-none">
             <label class="col-sm-3 align-label">Draw Boundary:</label>
@@ -62,9 +64,7 @@
             </div>
             </form>
         </div>
-        <div class="row">
-            <div id="map" class="map"></div>
-        </div>
+
     </div>
 </section>
 <link rel="stylesheet" href="https://openlayers.org/en/v4.1.1/css/ol.css" type="text/css">

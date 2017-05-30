@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/unknown', function () {
-    return view('errorpage');
+    return view('errors/404');
 });
 
 Route::get('/boundaries/boundary_loader', 'BoundariesController@index');

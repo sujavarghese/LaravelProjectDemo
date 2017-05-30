@@ -1,5 +1,4 @@
 <ul class="sidebar-menu">
-    <li class="header">Navigation</li>
     <!-- Optionally, you can add icons to the links -->
     <li class="{!! Request::is('/') ? 'active' : '' !!}">
         <a href="{{ route('home') }}">
@@ -8,7 +7,7 @@
         </a>
     </li>
     <li>
-        <a href="#">
+        <a>
             <i class="fa fa-square-o"></i>
             <span>Boundary</span>
             <i class="fa fa-angle-left pull-right"></i>

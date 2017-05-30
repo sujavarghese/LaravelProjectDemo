@@ -71,6 +71,7 @@ class HomeController extends Controller
     public function get_user_activity_log()
     {
         $log_table = UsersLog::all();
+        $total_count = count($log_table);
         $valid_upload_count = 0;
         $valid_validate_count = 0;
         $valid_load_count = 0;
@@ -86,18 +87,13 @@ class HomeController extends Controller
             }
         }
         return array(
-            array(
-                "value"=> $valid_upload_count,
-                "color"=> "gray"
-            ),
-            array(
-                "value"=> $valid_validate_count,
-                "color"=> "blue"
-            ),
-            array(
-                "value"=> $valid_load_count,
-                "color"=> "aqua"
-            ),
+            'total_count' => $total_count,
+            'valid_upload_count' => $valid_upload_count,
+            'valid_upload_percentage' => $valid_upload_count * 100 / $total_count,
+            'valid_validate_count' => $valid_validate_count,
+            'valid_validate_percentage' => $valid_validate_count * 100 / $total_count,
+            'valid_load_count' => $valid_load_count,
+            'valid_load_percentage' => $valid_load_count * 100 / $total_count
         );
     }
     /**

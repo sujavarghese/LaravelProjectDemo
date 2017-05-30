@@ -44,16 +44,24 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-
-        if ($exception instanceof ModelNotFoundException) {
+        // 404 page when a model is not found
+        if ($exception instanceof ModelNotFoundException ||
+            $exception instanceof NotFoundHttpException) {
             if ($request->ajax()) {
                 return response()->json(['error' => 'Not Found'], 404);
             }
-            return response()->view('errors.missing', [], 404);
+            return response()->view('errors.404', [], 404);
         }
+        // Redirect to Login page when Auth failed
+        if ($exception instanceof AuthenticationException)
+            return redirect('/login');
 
-
-        return parent::render($request, $exception);
+        // Custom error 500 view
+        return response()->view('errors.500', [
+            'exception_message' => $exception->getMessage(),
+            'exception' => $exception
+        ], 500);
+//        return parent::render($request, $exception);
     }
 
     /**

@@ -8,16 +8,16 @@
 
     <section class="content-header">
         <h1>
-            {{ $page_title or 'Boundary & Design Exchange Dashboard'}}
-            <small>{{ $page_description or 'Overall summary of Boundary & Design Exchange' }}</small>
+            {{ $page_title or 'Boundary Exchange Dashboard'}}
+            <small>{{ $page_description or 'Overall summary of Boundary Exchange' }}</small>
         </h1>
         <!-- You can dynamically generate breadcrumbs here -->
     </section>
 
     <section class="content">
-        <div class="container">
+        <div class="container width100">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-10" style="width: 95%">
                     <div class="panel panel-default">
                         <div class="panel-heading">Dashboard</div>
 
@@ -99,8 +99,6 @@
                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                                             class="fa fa-minus"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                                            class="fa fa-times"></i></button>
                                             </div>
                                         </div>
                                         <!-- /.box-header -->
@@ -145,7 +143,8 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="box box-default">
+                                    <div class="box box-info">
+
                                         <div class="box-header with-border">
                                             <h3 class="box-title">Boundary Load Statistics</h3>
 
@@ -153,30 +152,36 @@
                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                                             class="fa fa-minus"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                                            class="fa fa-times"></i></button>
                                             </div>
                                         </div>
-                                        <!-- /.box-header -->
                                         <div class="box-body">
-                                            <div class="row">
-                                                <div class="chart-responsive" style="text-align: center">
-                                                    <canvas id="pieChart" height="210" width="205"
-                                                            style="width: 205px; height: 210px;"></canvas>
+                                            <div class="progress-group" style="padding: 10px 5px;">
+                                                <span class="progress-text">Successfully Uploaded</span>
+                                                <span class="progress-number"><b>{{$dashboard_data['load_stat']['valid_upload_count']}}</b>/{{$dashboard_data['load_stat']['total_count']}}</span>
+
+                                                <div class="progress sm" style="margin-top: 5px;">
+                                                    <div class="progress-bar progress-bar-aqua" style="width: {{$dashboard_data['load_stat']['valid_upload_percentage']}}%"></div>
                                                 </div>
-                                                <!-- ./chart-responsive -->
-                                                <ul class="chart-legend clearfix" style="margin-left: 30%;">
-                                                    <li><i class="fa fa-circle-o text-gray"></i> Successfully Uploaded
-                                                    </li>
-                                                    <li><i class="fa fa-circle-o text-blue"></i> Validation Passed</li>
-                                                    <li><i class="fa fa-circle-o text-aqua"></i> Successfully Loaded
-                                                        into Database
-                                                    </li>
-                                                </ul>
                                             </div>
-                                            <!-- /.row -->
+                                            <!-- /.progress-group -->
+                                            <div class="progress-group" style="padding: 10px 5px;">
+                                                <span class="progress-text">Validation Passed</span>
+                                                <span class="progress-number"><b>{{$dashboard_data['load_stat']['valid_validate_count']}}</b>/{{$dashboard_data['load_stat']['total_count']}}</span>
+
+                                                <div class="progress sm" style="margin-top: 5px;">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: {{$dashboard_data['load_stat']['valid_validate_percentage']}}%"></div>
+                                                </div>
+                                            </div>
+                                            <!-- /.progress-group -->
+                                            <div class="progress-group" style="padding: 10px 5px;">
+                                                <span class="progress-text">Successfully Loaded</span>
+                                                <span class="progress-number"><b>{{$dashboard_data['load_stat']['valid_load_count']}}</b>/{{$dashboard_data['load_stat']['total_count']}}</span>
+
+                                                <div class="progress sm" style="margin-top: 5px;">
+                                                    <div class="progress-bar progress-bar-green" style="width: {{$dashboard_data['load_stat']['valid_load_percentage']}}%"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- /.box-body -->
                                     </div>
                                 </div>
                             </div>
@@ -186,14 +191,4 @@
             </div>
         </div>
     </section>
-    <script src="{{ asset ("/bower_components/admin-lte/plugins/chartjs/Chart.min.js") }}"
-            type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            var pie = <?php echo json_encode($dashboard_data['load_stat']); ?>;
-            var canvas = document.getElementById("pieChart");
-            var ctx = canvas.getContext("2d");
-            new Chart(ctx).Doughnut(pie);
-        });
-    </script>
 @endsection

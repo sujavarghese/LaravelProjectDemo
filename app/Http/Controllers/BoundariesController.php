@@ -32,6 +32,7 @@ class BoundariesController extends Controller
     {
         $this->dataload_utilities = new DataLoadUtilities();
         $this->generic_config = new GenericConfig();
+        parent::__construct();
     }
 
     /**
@@ -172,7 +173,7 @@ class BoundariesController extends Controller
     {
         $id = $r->get('id');
         if ($id){
-            $data = DB::table('boundaries')->where('job_code', '=', $id)->get();
+            $data = DB::table('boundaries')->where('job_code', '=', $id)->orderBy('job_code', 'desc')->get();
         }
         else
             $data = Boundary::all();

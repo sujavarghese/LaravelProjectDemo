@@ -2,6 +2,7 @@
 
 @extends('_template')
 
+
 @section('content')
 
 
