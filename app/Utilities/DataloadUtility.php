@@ -70,7 +70,7 @@ class DataLoadUtilities
      * Function to return response into KML template
      * @return array
      */
-    function generate_kml()
+    function generate_kml_args()
     {
         $config = new GenericConfig();
         $layer_names = $config->layer_names();
@@ -100,6 +100,35 @@ class DataLoadUtilities
                     //
                 } else {
                     $k[$key] = $val;
+                }
+            }
+            $response[$index] = $k;
+        }
+        return $response;
+    }
+
+    public static function reverse_map_to_input_attributes($results, $config) {
+        $cols_array = array();
+        forEach ($config as $key => $val){
+            forEach ($val as $str => $dbArr){
+                if ($str == 'attributes'){
+                    forEach ($dbArr as $input_col_name => $db_col_name){
+                        $cols_array[$db_col_name['tblcolumnname']] = $input_col_name;
+                    }
+                }
+            }
+        }
+        if (empty($cols_array)) {
+            return $results;
+        }
+        $response = array();
+        foreach ($results as $index => $result) {
+            $k = array();
+            forEach ($result as $key => $val) {
+                if (array_key_exists($key, $cols_array)) {
+                    $k[$cols_array[$key]] = $val;
+//                } else {
+//                    $k[$key] = $val;
                 }
             }
             $response[$index] = $k;

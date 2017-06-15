@@ -22,7 +22,7 @@
         <div class="row select-boundary-wrapper floating-dropdown">
             <form action="" id="exportBoundary">
                 <label class="col-sm-3 align-label">Select Boundary:</label>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <select class="form-control" id="boundaryType" name="boundaryType" required>
                         <option value="" selected="selected">Boundary Type</option>
                         <option value="FSA">FSA</option>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <select class="form-control" id="boundaryCode" name="boundaryCode" required disabled="disabled">
                         <option value="">Boundary Code</option>
                     </select>

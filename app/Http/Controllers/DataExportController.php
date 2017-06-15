@@ -28,24 +28,32 @@ class DataExportController extends Controller
     {
         return view('boundaries.boundaryExporter');
     }
+    public function get_boundary_by($type, $code, $job_code){
+        $response = array();
+        $match_these = array('boundary_type' => $type, 'boundary_name' => $code);
+        if ($job_code != NULL) {
+            $match_these['job_code'] = $job_code;
+        }
+        $queryset = Boundary::where($match_these)
+            ->first()->toArray();
+        if ($queryset != NULL){
+            $response = array($queryset);
+        }
+        return $response;
+    }
     /**
      * Function to store uploaded boundary data
      * @param Request $r
      */
-    public function export_kml($type, $code)
+    public function export_kml($type, $code, $job_code = NULL)
     {
-        if (is_array($code)) {
-            $filter_in = $code;
-        } else {
-            $filter_in = array($code);
-        }
-        if ($filter_in != NULL) {
-            $queryset = Boundary::whereIn('boundary_name', $filter_in)
-                ->orderBy('boundary_name', 'desc')
-                ->get()->toArray();
-
-            $response = $this->dataload_utilities->generate_kml();
-            $response['boundary_details'] = $this->dataload_utilities->exclude_columns_from_response($this->excluding_columns, $queryset);
+        if ($code != NULL) {
+            $queryset = $this->get_boundary_by($type, $code, $job_code);
+            $response = $this->dataload_utilities->generate_kml_args();
+            $response['boundary_details'] = $this->dataload_utilities->exclude_columns_from_response(
+                $this->excluding_columns, $queryset);
+            $response['boundary_details'] = $this->dataload_utilities->reverse_map_to_input_attributes(
+                $response['boundary_details'], $this->generic_config->boundary_configs);
             $file_name = $code . '_' . time() . '.kml';
             $response['file_name'] = $file_name;
             return response()->view('boundaries.kml', compact('response'))->header(

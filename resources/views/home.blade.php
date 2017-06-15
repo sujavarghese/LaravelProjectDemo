@@ -25,7 +25,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="info-box">
-                                        <span class="info-box-icon bg-aqua">S</span>
+                                        <span class="info-box-icon" style="background: transparent;">
+                                            <img style="height: 71%;" src="{{ asset("/sam-image.png")}}">
+                                        </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Total SAMs</span>
 
@@ -44,7 +46,9 @@
                                 <!-- /.col -->
                                 <div class="col-md-4">
                                     <div class="info-box">
-                                        <span class="info-box-icon bg-red">A</span>
+                                        <span class="info-box-icon" style="background: transparent;">
+                                            <img style="height: 90%;" src="{{ asset("/ada-img.png")}}">
+                                        </span>
 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Total ADAs</span>
@@ -68,8 +72,9 @@
 
                                 <div class="col-md-4">
                                     <div class="info-box">
-                                        <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
-
+                                        <span class="info-box-icon" style="background: transparent;">
+                                            <img style="height: 80%;" src="{{ asset("/users.png")}}">
+                                        </span>
                                         <div class="info-box-content">
                                             <span class="info-box-text">Users</span>
                                             <span class="info-box-number">

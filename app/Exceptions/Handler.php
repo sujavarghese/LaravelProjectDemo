@@ -56,12 +56,15 @@ class Handler extends ExceptionHandler
         if ($exception instanceof AuthenticationException)
             return redirect('/login');
 
-        // Custom error 500 view
-        return response()->view('errors.500', [
-            'exception_message' => $exception->getMessage(),
-            'exception' => $exception
-        ], 500);
-//        return parent::render($request, $exception);
+        if ($exception instanceof \ErrorException) {
+            // Custom error 500 view
+            return response()->view('errors.500', [
+                'exception_message' => $exception->getMessage(),
+                'exception' => $exception
+            ], 500);
+        } else {
+            return parent::render($request, $exception);
+        }
     }
 
     /**

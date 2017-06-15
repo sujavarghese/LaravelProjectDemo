@@ -55,8 +55,8 @@ class GenericConfig
             forEach ($val as $str => $dbArr)
             {
                 if ($str == 'attributes') {
-                    forEach ($val[$str] as $dbcol => $dbVal) {
-                        array_push($column_names, $dbVal['tblcolumnname']);
+                    forEach ($dbArr as $dbcol => $dbVal) {
+                        array_push($column_names, $dbcol);
                     }
                 }
             }

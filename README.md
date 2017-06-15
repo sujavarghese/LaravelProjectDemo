@@ -3,7 +3,7 @@
 ## Network Boundary Design Exchange
 
 
-This is an application for Network Boundary Design Exchange built on Laravel PHP, MySQL and Bootstrap. 
+This is an application for Network Boundary Exchange built on Laravel PHP, MySQL and Bootstrap. 
 
 
 ## Release 0.0
@@ -72,22 +72,22 @@ Incorporated Maps, KML, Graphs into the application.
 
 ## Changelog
 
-1.0 Dashboard Enhancements
+    1.0 Dashboard Enhancements
 
-0.9 UI enhancements
+    0.9 UI enhancements
 
-0.8 User activity log
+    0.8 User activity log
 
-0.7 KML Export
+    0.7 KML Export
 
-0.6 Map Integration
+    0.6 Map Integration
 
-0.5 Added KML Validation
+    0.5 Added KML Validation
 
-0.4 UI enhancements
+    0.4 UI enhancements
 
-0.3 Added Boundary Upload and Store
+    0.3 Added Boundary Upload and Store
 
-0.2 Added Dashboard
+    0.2 Added Dashboard
 
-0.1 Initial Release
+    0.1 Initial Release

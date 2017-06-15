@@ -42,7 +42,7 @@
                               ) !!}
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label class="col-sm-5 control-label">Select the Boundary Type and Name</label>
+                                    <label class="col-sm-5 control-label">Select the Boundary Type and Name: </label>
                                     <div class="col-sm-2">
                                         {!! Form::select(
                                             'selBoundaryType',

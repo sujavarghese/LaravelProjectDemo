@@ -1,9 +1,9 @@
 <!-- Main Header -->
 <header class="main-header">
-
+    <a href="{{route('home')}}" class="logo"><b>{{ config('app.name', 'Boundary Exchange') }}</b></a>
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
-        <a href="{{route('home')}}" class="logo"><b>{{ config('app.name', 'Boundary Exchange') }}</b></a>
+
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>

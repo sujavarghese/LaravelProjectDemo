@@ -53,7 +53,7 @@
                                                         <td class="">{!! $row->added_by !!}</td>
                                                         <td class="">{!! $row->created_at !!}</td>
                                                         <td><a href="/map?boundaryType={!! $row->boundary_type !!}&boundaryCode={!! $row->boundary_name  !!}">View</a> </td>
-                                                        <td><a href="/export/kml/{!! $row->boundary_type !!}/{!! $row->boundary_name  !!}">Export</a> </td>
+                                                        <td><a href="/export/kml/{!! $row->boundary_type !!}/{!! $row->boundary_name  !!}/{!! $row->job_code !!}">Export</a> </td>
                                                     </tr>
                                                 @endforeach
 
